@@ -1,0 +1,2265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechHaven - Premium Tech Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8f8f8;
+            color: #333;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            width: 100vw;
+            min-width: 100vw;
+            left: 0;
+            right: 0;
+            margin: 0;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: black;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo img {
+            display: block;
+            max-width: 130px;
+            max-height: 30px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-menu li {
+            margin-left: 25px;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+
+        .nav-icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-icons img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .nav-icons div {
+            margin-left: 15px;
+            cursor: pointer;
+        }
+
+        /* Mobile menu button */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 24px;
+            height: 18px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 150;
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+
+        /* Apple-style Search Container */
+        .search-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+            z-index: 200;
+        }
+
+        .search-container.active {
+            display: flex;
+            transform: translateY(0);
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            width: 60%;
+            max-width: 600px;
+            padding: 0 15px;
+            border-radius: 8px 8px 0 0;
+            background-color: #ffffff;
+            margin-top: 40px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10), 0 1.5px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        .search-icon {
+            color: #6e6e73;
+            margin-right: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .close-icon {
+            color: #6e6e73;
+            cursor: pointer;
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="search"] {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #333;
+            font-size: 14px;
+            width: 100%;
+            padding: 10px 0;
+        }
+
+        /* Quick Links for Search */
+        .search-quick-links {
+            position: relative;
+            width: 60%;
+            max-width: 600px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 8px 8px;
+            padding: 20px;
+            z-index: 190;
+            display: none;
+        }
+
+        .search-quick-links.active {
+            display: block;
+        }
+
+        .search-quick-links h3 {
+            margin-bottom: 15px;
+            color: #1d1d1f;
+            font-size: 14px;
+        }
+
+        .quick-link {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            color: black;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .quick-link:hover {
+            padding: 5px;
+            border-radius: 3px;
+            background-color: lightgray
+        }
+
+        .quick-link span {
+            margin-left: 8px;
+        }
+
+        .arrow-icon {
+            margin-right: 10px;
+        }
+
+        /* Status message */
+        .status-message {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border-radius: 5px;
+            font-size: 12px;
+            z-index: 1000;
+            display: none;
+        }
+
+        .status-message.active {
+            display: block;
+            animation: fadeInOut 3s forwards;
+        }
+
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+            }
+
+            15% {
+                opacity: 1;
+            }
+
+            85% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* Hero Section */
+        /* Replace your .hero CSS with this for full viewport height */
+        .hero {
+            min-height: 100vh;
+            height: 100vh;
+            max-height: 100vh;
+            background-image: url('/api/placeholder/1200/500');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Add to your <style> for the hero slider */
+        .hero-slider {
+            width: 100vw;
+            min-height: 100vh;
+            height: 100vh;
+            max-height: 100vh;
+            position: relative;
+            overflow: hidden;
+            background: #222;
+            display: block;
+        }
+
+        /* Make the hero slider image cover the entire slide area responsively */
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 0.7s;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+            z-index: 2;
+            pointer-events: auto;
+        }
+
+        /* Place hero slider content on the left and make overlay background transparent */
+        .hero-content {
+            background: rgba(0, 0, 0, 0);
+            /* More transparent */
+            color: #fff;
+            padding: 40px 50px;
+            border-radius: 16px;
+            text-align: left;
+            max-width: 700px;
+            margin-left: 60px;
+            margin-right: auto;
+            box-shadow: none;
+            position: relative;
+            z-index: 2;
+            align-items: flex-start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            font-size: 30px;
+
+        }
+
+        @media (max-width: 900px) {
+            .hero-content {
+                max-width: 95vw;
+                margin-left: 20px;
+                padding: 25px 10px;
+
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero-content {
+                margin-left: 0;
+                padding: 15px 5px;
+                text-align: left;
+            }
+        }
+
+        .hero-slider-controls {
+            position: absolute;
+            left: 50%;
+            bottom: 40px;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .hero-slider-arrow {
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .hero-slider-arrow:hover {
+            background: #0070c9;
+        }
+
+        .hero-slider-dots {
+            display: flex;
+            gap: 10px;
+        }
+
+        .hero-slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: lightblue;
+            opacity: 0.5;
+            cursor: pointer;
+            border: 2px solid lightblue;
+            transition: opacity 0.2s, background 0.2s;
+        }
+
+        .hero-slider-dot.active {
+            opacity: 1;
+            background: #0070c9;
+            border-color: #0070c9;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content {
+                padding: 20px 10px;
+                max-width: 98vw;
+            }
+
+            .hero-slider {
+                min-height: 60vh;
+                height: 60vh;
+                max-height: none;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-slider {
+                min-height: 300px;
+                height: 45vh;
+            }
+
+            .hero-content {
+                padding: 10px 5px;
+            }
+        }
+
+
+
+        /* Responsive hero-content: centered on mobile, left on desktop/tablet */
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            text-align: left;
+            max-width: 700px;
+            margin-left: 60px;
+            margin-right: auto;
+            padding: 40px 50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        @media (max-width: 900px) {
+            .hero-content {
+                max-width: 95vw;
+                position: absolute;
+                margin-top: 200px;
+
+                font-size: 12px;
+                justify-content: left;
+                align-items: flex-start;
+                text-align: left;
+
+            }
+
+            .hero-content p {
+
+                font-size: 12px;
+                justify-content: left;
+                align-items: flex-start;
+                text-align: left;
+
+            }
+
+        }
+
+        @media (max-width: 600px) {
+            .hero-content {
+                align-items: start;
+                justify-content: left;
+                text-align: left;
+                margin-left: 0;
+                margin-right: 50px;
+                padding: 15px 5px;
+                width: 100%;
+                max-width: 100vw;
+            }
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #0070c9;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #005aa3;
+        }
+
+        /* Featured Products */
+        .featured {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 24px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 3px;
+            background-color: #0070c9;
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-img {
+            height: 200px;
+            width: 100%;
+            background-color: #f8f8f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-img img {
+            max-height: 80%;
+            max-width: 80%;
+            object-fit: contain;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .product-price {
+            color: black;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        /* Categories Section */
+        .categories {
+            padding: 60px 0;
+            background-color: #fff;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .category-card {
+            height: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .category-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .category-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .category-card:hover .category-overlay {
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .category-card:hover .category-img {
+            transform: scale(1.05);
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            background-image: url(images/footer.jpg);
+
+            color: white;
+            padding: 1rem 1.5rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            font-size: 13px;
+        }
+
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            max-width: 300px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-right a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-bottom {
+            width: 100%;
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 13px;
+        }
+
+        p {
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+
+            .product-grid,
+            .category-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+
+            .hero-content {
+                max-width: 400px;
+            }
+
+            .hero h1 {
+                font-size: 16px;
+
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 48px;
+                left: -100%;
+                width: 70%;
+                max-width: 300px;
+                height: calc(100vh - 50px);
+                background: linear-gradient(135deg,
+                        rgba(0, 0, 0, 0.95),
+                        rgba(146, 172, 202, 0.4));
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px;
+                transition: left 0.3s ease;
+                z-index: 90;
+                box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-menu li {
+                margin: 15px 0;
+                width: 100%;
+            }
+
+            .logo {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 120;
+            }
+
+            .nav-menu a {
+                font-size: 16px;
+                display: block;
+                width: 100%;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .menu-toggle.active span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .hero-content {
+                max-width: 100%;
+                margin: 0 20px;
+                text-align: center;
+            }
+
+            .hero {
+                height: 50vh;
+            }
+
+            .product-grid,
+            .category-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 20px;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                padding: 0 20px;
+            }
+
+            .newsletter-form input {
+                border-radius: 5px;
+                margin-bottom: 10px;
+                width: 100%;
+            }
+
+            .newsletter-form button {
+                border-radius: 5px;
+                padding: 12px;
+                width: 100%;
+            }
+
+            .search-box,
+            .search-quick-links {
+                width: 90%;
+                max-width: none;
+            }
+
+            .footer-column {
+                flex: 0 0 50%;
+                margin-bottom: 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                min-height: 300px;
+                height: 40vh;
+            }
+
+            .hero h1 {
+                font-size: 10px;
+                margin-bottom: 10px;
+            }
+
+            .hero p {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+
+            .btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
+            }
+
+            .product-img {
+                height: 150px;
+            }
+
+            .product-title {
+                font-size: 14px;
+            }
+
+            .product-price {
+                font-size: 16px;
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+
+            .category-card {
+                height: 120px;
+            }
+
+            .category-overlay {
+                font-size: 16px;
+            }
+
+            .footer-column {
+                flex: 0 0 100%;
+            }
+        }
+
+        /* Place this in your <style> section or update your responsive CSS */
+
+        @media (max-width: 768px) {
+            .nav-icons {
+                position: static;
+                margin: 20px 0 0 0;
+                gap: 1rem;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                width: 100%;
+            }
+
+            .navbar {
+                flex-wrap: wrap;
+            }
+
+            /* Move nav-icons inside nav-menu when menu is open */
+            .nav-menu {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-menu .nav-icons {
+                display: flex;
+            }
+
+            /* Hide nav-icons in header (outside menu) on mobile */
+            .navbar>.nav-icons {
+                display: none;
+            }
+        }
+
+        /* Show nav-icons in header on desktop */
+        @media (min-width: 769px) {
+            .navbar>.nav-icons {
+                display: flex;
+            }
+
+            .nav-menu .nav-icons {
+                display: none !important;
+            }
+        }
+
+        .nav-icons img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .nav-icons div {
+            margin-left: 15px;
+            cursor: pointer;
+        }
+
+
+
+
+        /* Modal overlay for mobile menu */
+        .menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 80;
+        }
+
+        .menu-overlay.active {
+            display: block;
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #0070c9;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 90;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        .option-btn {
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        /* smaller color buttons */
+        .color-btn {
+            padding: .3rem .6rem;
+            font-size: .8rem;
+        }
+
+        /* smaller storage buttons */
+        .storage-btn {
+            padding: .3rem .6rem;
+            font-size: .8rem;
+        }
+
+        .option-btn.selected {
+            background: gray;
+            color: #fff;
+            border: none;
+        }
+
+        .qty-btn {
+            background: #ddd;
+            border: none;
+            padding: .4rem .8rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: .75rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            background: #4c4c4c;
+            color: #fff;
+        }
+
+        .action-btn.primary {
+            background: black;
+        }
+
+        .action-btn:hover,
+        .option-btn:hover,
+        .qty-btn:hover {
+            opacity: .9;
+        }
+
+        /* ==== Reviews & Gallery ==== */
+        .reviews-section {
+            margin-top: 2rem;
+        }
+
+        .reviews-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .reviews-container {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .avg-score {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .avg-score .score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #333;
+            line-height: 1;
+        }
+
+        .avg-score .out-of {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .avg-score .stars {
+            color: gold;
+            font-size: 1.25rem;
+            line-height: 1;
+        }
+
+        .avg-score .count {
+            font-size: 0.9rem;
+            color: #777;
+            margin-top: 0.25rem;
+        }
+
+        .rating-bars {
+            flex: 2;
+            min-width: 200px;
+        }
+
+        .rating-bars .bar-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.4rem;
+        }
+
+        .rating-bars .bar-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .rating-bars .label {
+            width: 10px;
+            font-size: 10px;
+            color: #555;
+
+        }
+
+        .rating-bars .bar {
+            flex: 1;
+            height: 8px;
+            margin-left: 0.5rem;
+            border-radius: 4px;
+            flex: none;
+            /* disable flex-grow/flex-shrink */
+            width: 250px;
+            /* set your desired width */
+        }
+
+        .rating-bars .bar-5 {
+            background: black;
+        }
+
+        .rating-bars .bar-4 {
+            background: gray;
+        }
+
+        .rating-bars .bar-3 {
+            background: darkgray;
+        }
+
+        .rating-bars .bar-2 {
+            background: gray;
+        }
+
+        .rating-bars .bar-1 {
+            background: lightgray;
+        }
+
+        .write-review-wrap {
+            flex-basis: 100%;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .write-review-btn {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid #1f487e;
+            border-radius: 20px;
+            background: white;
+            color: #1f487e;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .write-review-btn:hover {
+            background: #1f487e;
+            color: white;
+        }
+
+        .buyers-gallery-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 2rem 0 1rem;
+        }
+
+        .buyers-gallery {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .buyers-gallery img {
+            width: 100px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .button {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background-color: black;
+            color: #fff;
+            border-radius: 24px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .write-review-wrap {
+            flex-basis: 100%;
+            text-align: center;
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /*  BUYER REVIEW   */
+        .modal-content {
+            background: linear-gradient(135deg, #f5f8ff 60%, #e3eafc 100%);
+            padding: 32px 24px 24px 24px;
+            width: 95%;
+            max-width: 370px;
+            border-radius: 22px;
+            box-shadow: 0 8px 32px rgba(31, 72, 126, 0.18), 0 1.5px 8px rgba(31, 72, 126, 0.10);
+            text-align: center;
+            position: relative;
+            border: 1.5px solid black;
+            animation: modalPop .25s cubic-bezier(.23, 1.01, .32, 1) both;
+        }
+
+        @keyframes modalPop {
+            0% {
+                transform: scale(0.85);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-content h2 {
+            color: black;
+            font-size: 1.35rem;
+            margin-bottom: 1.2rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .modal-content input,
+        .modal-content textarea {
+            width: 100%;
+            padding: 12px 14px;
+            margin-bottom: 14px;
+            border-radius: 12px;
+            border: 1.5px solid lightgray;
+            font-size: 1rem;
+            background: #fafdff;
+            transition: border 0.2s;
+            outline: none;
+            color: gray
+        }
+
+        .modal-content input:focus,
+        .modal-content textarea:focus {
+            border: 1.5px solid black;
+            background: #f0f6ff;
+        }
+
+        .modal-content input[type="file"] {
+            padding: 8px 0;
+            border: none;
+            background: none;
+            margin-bottom: 18px;
+        }
+
+        .modal-content button.submit-btn {
+            background: linear-gradient(90deg, black 60%, darkgray 100%);
+            color: #fff;
+            border: none;
+            border-radius: 18px;
+            padding: 12px 0;
+            width: 100%;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 8px;
+            box-shadow: 0 2px 8px rgba(31, 72, 126, 0.08);
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        .modal-content button.submit-btn:hover {
+            background: linear-gradient(90deg, black 60%, gray 100%);
+            transform: translateY(-2px) scale(1.03);
+        }
+
+        .modal-content .close-btn {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: #e3eafc;
+            color: black;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            box-shadow: 0 1px 4px rgba(31, 72, 126, 0.08);
+            transition: background 0.2s, color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content .close-btn:hover {
+            background: black;
+            color: #fff;
+        }
+
+        @media (max-width: 480px) {
+            .modal-content {
+                padding: 18px 6px 16px 6px;
+                max-width: 98vw;
+            }
+
+            .modal-content h2 {
+                font-size: 1.05rem;
+            }
+
+            .modal-content input,
+            .modal-content textarea {
+                font-size: 0.95rem;
+                padding: 10px 8px;
+            }
+
+            .modal-content button.submit-btn {
+                font-size: 0.95rem;
+                padding: 10px 0;
+            }
+        }
+
+        /* Add or update these styles in your <style> section for responsive main content */
+
+        main {
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+
+        main>div {
+            flex: 1;
+            min-width: 300px;
+            background: #f5f8ff;
+            padding: 1rem;
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 1100px) {
+            main {
+                gap: 1rem;
+            }
+
+            main>div {
+                min-width: 220px;
+                padding: 0.7rem;
+            }
+        }
+
+        @media (max-width: 900px) {
+            main {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 2rem;
+                padding: 1.2rem 0.5rem;
+            }
+
+            main>div {
+                min-width: 0;
+                width: 100%;
+                margin: 0 auto;
+                padding: 1rem 0.5rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            main {
+                flex-direction: column;
+                gap: 1.2rem;
+                padding: 0.5rem 0.2rem;
+            }
+
+            main>div {
+                padding: 0.5rem 0.2rem;
+                border-radius: 7px;
+            }
+
+            .product-img {
+                height: 120px !important;
+            }
+
+            .buyers-gallery {
+                gap: 0.3rem;
+            }
+
+            .review-card {
+                max-width: 98vw;
+                min-width: 0;
+                padding: 10px 4px 10px 4px;
+            }
+        }
+
+        .star-rating {
+            display: inline-block;
+            font-size: 0;
+            unicode-bidi: bidi-override;
+            direction: rtl;
+        }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating label {
+            color: #ccc;
+            font-size: 2rem;
+            padding: 0 5px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .star-rating input:checked~label,
+        .star-rating label:hover,
+        .star-rating label:hover~label {
+            color: #f5b301;
+        }
+
+        .star-rating input:checked+label {
+            color: #f5b301;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="navbar">
+                <button class="menu-toggle" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu" id="navMenu">
+                    <div class="nav-icons">
+                        <div class="search-icon" id="searchIcon"><img src="images/search icon.png"></div>
+                        <div class="login-icon"><a href="#"><img src="images/account icon.png"></a></div>
+                        <div class="cart-icon"><a href="cart.html"><img src="images/basket icon.png" alt="Cart"></a>
+                        </div>
+                    </div>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                </ul>
+                <a href="index.html" class="logo"><img src="images/logo.png" width="100px"></a>
+                <div class="nav-icons">
+                    <div class="search-icon" id="searchIcon"><a><img src="images/search icon.png"><a></a></div>
+                    <div class="login-icon"><a href="login.html"><img src="images/account icon.png"></a></div>
+                    <div class="cart-icon"><a href="cart.html"><img src="images/basket icon.png" alt="Cart"></a></div>
+                </div>
+
+
+                <!-- Apple-style Search Container -->
+                <div class="search-container" id="searchContainer">
+                    <div class="search-box">
+                        <div class="search-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#666"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                            </svg>
+                        </div>
+                        <input type="search" placeholder="Search TechHaven..." id="searchInput">
+                        <div class="close-icon" id="closeSearch">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#666"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="search-quick-links" id="searchQuickLinks">
+                        <h3>Quick Links</h3>
+                        <a href="#" class="quick-link">
+                            <div class="arrow-icon">→</div>
+                            <span>Smartphones</span>
+                        </a>
+                        <a href="#" class="quick-link">
+                            <div class="arrow-icon">→</div>
+                            <span>Laptops</span>
+                        </a>
+                        <a href="#" class="quick-link">
+                            <div class="arrow-icon">→</div>
+                            <span>Appliances</span>
+                        </a>
+                        <a href="#" class="quick-link">
+                            <div class="arrow-icon">→</div>
+                            <span>Electronics</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- Status Message -->
+    <div class="status-message" id="statusMessage"></div>
+   <main style="padding:2rem; display:flex; justify-content:center; gap:2rem;">
+        <!-- Left (static) -->
+        <div style="flex:1; min-width:300px; background:#f5f8ff; padding:1rem; border-radius:10px;">
+            <img id="product-image" src="images/appliances img/TCL 65 4K Smart UHD TV 65V6B.webp" alt="Asus Zenbook 14"
+                style="width:90%; border-radius:10px;">
+                <h2 style="font-size:2rem; font-weight:bold; color:black;">TCL 65 4K Smart UHD TV</h2>
+            <p style="margin-bottom:1rem;">65-inch 4K UHD, Smart TV, Google Assistant, HDR</p>
+
+            <!-- price & qty -->
+            <div style="margin-top:1rem;">
+                <p id="product-price" style="font-size:1.5rem; font-weight:bold; color:black;">
+                    ₱ 31,690
+                </p>
+            </div>
+            <div style="margin-top:1rem; display:flex; align-items:center; gap:1rem;">
+                <strong>Quantity</strong>
+                <button onclick="changeQuantity(-1)" class="qty-btn">−</button>
+                <span id="qty-value">1</span>
+                <button onclick="changeQuantity(1)" class="qty-btn">+</button>
+            </div>
+            <!-- actions -->
+            <div style="margin-top:1.5rem; display:flex; gap:1rem;">
+                <button id="add-to-cart-btn" class="action-btn">Add to Cart</button>
+                <button class="action-btn primary">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- Right (scrollable) -->
+        <div style="flex:1; min-width:300px; height:600px; overflow-y:auto; padding-right:.5rem;">
+            
+            <h3 style="margin-bottom:1rem; font-weight:bold;">Product Features</h3>
+            <ul style="list-style:none; line-height:1.8; padding-left:0;">
+                <li> 65-inch 4K UHD resolution with HDR support</li>
+                <li> Smart TV with Android OS, built-in Google Assistant</li>
+                <li> Multiple HDMI and USB ports for seamless connectivity</li>
+                <li> Dolby Audio for immersive sound</li>
+            </ul>
+
+            <section class="reviews-section">
+
+                <h3 class="reviews-header">Reviews</h3><br>
+
+                <div class="reviews-container">
+
+                    <!-- Average Score -->
+                    <div class="avg-score">
+                        <p class="score">5.0</p>
+                        <p class="out-of">/5</p>
+                        <div class="stars">★★★★★</div>
+                        <p class="count">1 Review</p>
+                    </div>
+
+                    <!-- Rating Bars -->
+                    <div class="rating-bars">
+                        <div class="bar-row">
+                            <span class="label">5 Stars</span>
+                            <div class="bar bar-5"></div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="label">4 Stars</span>
+                            <div class="bar bar-4"></div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="label">3 Stars</span>
+                            <div class="bar bar-3"></div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="label">2 Stars</span>
+                            <div class="bar bar-2"></div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="label">1 Star</span>
+                            <div class="bar bar-1"></div>
+                        </div>
+                    </div>
+
+
+                    <!-- Write a Review Button -->
+                    <div class="write-review-wrap">
+                        <button class="button" onclick="openModal()">Write a Review</button>
+                    </div>
+
+
+                    <div class="modal" id="reviewModal">
+                        <div class="modal-content">
+                            <button class="close-btn" onclick="closeModal()">&times;</button>
+                            <h2>Write a Review</h2><br>
+                            <input type="text" id="reviewerName" placeholder="Your Name">
+                            <textarea id="reviewText" placeholder="Write your review..." rows="4"></textarea>
+                            <!-- Star Rating -->
+                            <div style="margin-bottom:14px; text-align:center;">
+                                <div class="star-rating">
+                                    <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
+                                    <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+                                    <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+                                    <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+                                    <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+                                </div>
+                            </div>
+
+                            <input type="file" id="reviewImage" accept="image/*,video/*" />
+                            <button class="submit-btn" onclick="submitReview()">Submit Review</button>
+                        </div>
+                    </div>
+
+                    <script>
+                        function openModal() {
+                            document.getElementById("reviewModal").classList.add("active");
+                        }
+
+                        function closeModal() {
+                            document.getElementById("reviewModal").classList.remove("active");
+                        }
+                    </script>
+
+                </div>
+
+                <!-- Buyers Gallery -->
+                <h3 class="buyers-gallery-header">Buyers Gallery</h3>
+                <div class="buyers-gallery" id="buyersGallery">
+
+                    <!-- Reviews will be appended here -->
+                </div>
+
+                <script>
+                    function submitReview() {
+                        const name = document.getElementById('reviewerName').value.trim();
+                        const text = document.getElementById('reviewText').value.trim();
+                        const rating = document.querySelector('input[name="rating"]:checked')?.value;
+                        const imageInput = document.getElementById('reviewImage');
+                        let imageData = "";
+
+                        if (!name || !text || !rating) {
+                            alert("Please enter your name, review, and select a star rating.");
+                            return;
+                        }
+
+                        // Read image as base64 if provided
+                        if (imageInput.files && imageInput.files[0]) {
+                            const reader = new FileReader();
+                            reader.onload = function (e) {
+                                imageData = e.target.result;
+                                saveAndAppendReview({
+                                    name,
+                                    text,
+                                    imageData,
+                                    rating: parseInt(rating),
+                                    date: new Date().toISOString()
+                                });
+                            };
+                            reader.readAsDataURL(imageInput.files[0]);
+                        } else {
+                            saveAndAppendReview({
+                                name,
+                                text,
+                                imageData: "",
+                                rating: parseInt(rating),
+                                date: new Date().toISOString()
+                            });
+                        }
+
+                        // Clear form
+                        document.getElementById('reviewerName').value = '';
+                        document.getElementById('reviewText').value = '';
+                        document.getElementById('reviewImage').value = '';
+                        document.querySelectorAll('input[name="rating"]').forEach(radio => radio.checked = false);
+
+                        closeModal();
+                    }
+
+
+                    function appendReviewToGallery(review) {
+                        const gallery = document.getElementById('buyersGallery');
+                        const wrapper = document.createElement('div');
+                        wrapper.className = "buyers-gallery-item";
+                        wrapper.style.display = "flex";
+                        wrapper.style.flexDirection = "column";
+                        wrapper.style.alignItems = "center";
+                        wrapper.style.justifyContent = "flex-start";
+                        wrapper.style.background = "#fff";
+                        wrapper.style.borderRadius = "10px";
+                        wrapper.style.boxShadow = "0 2px 8px rgba(31,72,126,0.07)";
+                        wrapper.style.padding = "10px 12px";
+                        wrapper.style.margin = "8px";
+                        wrapper.style.minWidth = "120px";
+                        wrapper.style.maxWidth = "140px";
+                        wrapper.style.wordBreak = "break-word";
+
+                        if (review.imageData) {
+                            const img = document.createElement('img');
+                            img.src = review.imageData;
+                            img.alt = review.name || "Buyer image";
+                            img.width = 100;
+                            img.height = 80;
+                            img.style.objectFit = "cover";
+                            img.style.borderRadius = "7px";
+                            img.style.marginBottom = "7px";
+                            wrapper.appendChild(img);
+                        }
+                        if (review.name || review.text) {
+                            const cap = document.createElement('div');
+                            cap.style.fontSize = "0.85rem";
+                            cap.style.color = "#1f487e";
+                            cap.style.fontWeight = "bold";
+                            cap.style.marginBottom = "2px";
+                            cap.style.textAlign = "center";
+                            cap.innerText = review.name ? review.name : "";
+                            wrapper.appendChild(cap);
+
+                            if (review.text) {
+                                const textDiv = document.createElement('div');
+                                textDiv.style.fontSize = "0.8rem";
+                                textDiv.style.color = "#333";
+                                textDiv.style.textAlign = "center";
+                                textDiv.innerText = review.text;
+                                wrapper.appendChild(textDiv);
+                            }
+                        }
+                        gallery.appendChild(wrapper);
+                    }
+
+                    // Do NOT load reviews from localStorage on page load
+                </script>
+        </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get all necessary elements
+            const searchIcon = document.getElementById('searchIcon');
+            const searchContainer = document.getElementById('searchContainer');
+            const closeSearch = document.getElementById('closeSearch');
+            const searchInput = document.getElementById('searchInput');
+            const searchQuickLinks = document.getElementById('searchQuickLinks');
+            const statusMessage = document.getElementById('statusMessage');
+
+            // Function to display status message
+            function showStatusMessage(message) {
+                statusMessage.textContent = message;
+                statusMessage.classList.add('active');
+
+                // Hide status message after 3 seconds
+                setTimeout(function () {
+                    statusMessage.classList.remove('active');
+                }, 3000);
+            }
+
+            // Show search container when search icon is clicked
+            searchIcon.addEventListener('click', function (e) {
+                e.preventDefault();
+                searchContainer.style.display = 'flex';
+                setTimeout(() => {
+                    searchContainer.classList.add('active');
+                }, 10);
+                searchQuickLinks.classList.add('active');
+                searchInput.focus();
+                showStatusMessage("Search activated");
+            });
+
+            // Hide search container when close icon is clicked
+            closeSearch.addEventListener('click', function () {
+                searchContainer.classList.remove('active');
+                searchQuickLinks.classList.remove('active');
+                searchInput.value = '';
+                setTimeout(() => {
+                    searchContainer.style.display = 'none';
+                }, 300);
+                showStatusMessage("Search closed");
+            });
+
+            // Handle search submission
+            searchInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (searchInput.value.trim() !== '') {
+                        showStatusMessage(`Searching for: "${searchInput.value}"`);
+                        setTimeout(function () {
+                            searchInput.value = '';
+                            searchContainer.classList.remove('active');
+                            searchQuickLinks.classList.remove('active');
+                            setTimeout(() => {
+                                searchContainer.style.display = 'none';
+                            }, 300);
+                        }, 1000);
+                    }
+                }
+            });
+
+            // Prevent clicks inside search container from closing it
+            searchContainer.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+            searchQuickLinks.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+        });
+
+        // Add this inside your <script> tag, after the DOMContentLoaded event starts
+
+        // Responsive menu functionality
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        // Toggle menu open/close
+        menuToggle.addEventListener('click', function () {
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+        });
+
+        // Hide menu when overlay is clicked (for mobile)
+        menuOverlay.addEventListener('click', function () {
+            menuToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+        });
+
+        // Optional: Hide menu when a nav link is clicked (for single-page feel)
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function () {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            });
+        });
+
+        // Add this at the end of your <script> tag
+        document.addEventListener('DOMContentLoaded', function () {
+            // Hero slider logic
+            const heroSlides = document.querySelectorAll('.hero-slide');
+            const heroPrev = document.getElementById('heroPrev');
+            const heroNext = document.getElementById('heroNext');
+            const heroDotsContainer = document.getElementById('heroSliderDots');
+            let heroCurrent = 0;
+            let heroSliderTimer = null;
+
+            // Set background images from img attribute
+            heroSlides.forEach(slide => {
+                const img = slide.getAttribute('img');
+                if (img) slide.style.backgroundImage = `url('${img}')`;
+            });
+
+            // Create dots
+            heroSlides.forEach((_, idx) => {
+                const dot = document.createElement('span');
+                dot.className = 'hero-slider-dot' + (idx === 0 ? ' active' : '');
+                dot.addEventListener('click', () => {
+                    showHeroSlide(idx);
+                    startHeroSliderTimer();
+                });
+                heroDotsContainer.appendChild(dot);
+            });
+            const heroDots = heroDotsContainer.querySelectorAll('.hero-slider-dot');
+
+            function showHeroSlide(idx) {
+                heroSlides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === idx);
+                    heroDots[i].classList.toggle('active', i === idx);
+                });
+                heroCurrent = idx;
+            }
+
+            function nextHeroSlide() {
+                let next = (heroCurrent + 1) % heroSlides.length;
+                showHeroSlide(next);
+            }
+
+            function prevHeroSlide() {
+                let prev = (heroCurrent - 1 + heroSlides.length) % heroSlides.length;
+                showHeroSlide(prev);
+            }
+
+            function startHeroSliderTimer() {
+                if (heroSliderTimer) clearInterval(heroSliderTimer);
+                heroSliderTimer = setInterval(nextHeroSlide, 5000);
+            }
+
+            heroNext.addEventListener('click', () => {
+                nextHeroSlide();
+                startHeroSliderTimer();
+            });
+            heroPrev.addEventListener('click', () => {
+                prevHeroSlide();
+                startHeroSliderTimer();
+            });
+
+            showHeroSlide(0);
+            startHeroSliderTimer();
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-left">
+            <div><strong>Connect with us</strong></div>
+            <div class="social-icons">
+                <a href="#"><img src="images/fb icon.png" width="20"></a>
+                <a href="#"><img src="images/instagram icon.png" width="20"></a>
+                <a href="#"><img src="images/gmail icon.png" width="20"></a>
+                <a href="#"><img src="images/x icon.png" width="20"></a>
+            </div>
+            <p><strong>Customer Support</strong></p>
+            <p>Email: support@techhaven.com<br>Phone: +1 (800) 123-4567<br>Hours: Monday–Friday, 9 AM–6 PM</p>
+        </div>
+        <div class="footer-right">
+            <a href="feedback.html">Feedback</a>
+            <a href="faq.html">FAQ's</a>
+            <a href="terms.html">Terms of Service</a>
+            <a href="privacy.html">Privacy Policy</a>
+        </div>
+        <div class="footer-bottom">
+            Copyright © 2025 TECHHAVEN. All rights reserved.
+        </div>
+    </footer>
+
+
+ <script>
+        let basePrice = 31690;  // initial 256GB price
+        let qty = 1;
+
+        function updateDisplayedPrice() {
+            const total = basePrice * qty;
+            document.getElementById('product-price')
+                .textContent = `₱ ${total.toLocaleString()}`;
+        }
+
+        function changeQuantity(delta) {
+            qty = Math.max(1, qty + delta);
+            document.getElementById('qty-value').textContent = qty;
+            updateDisplayedPrice();
+        }
+
+        // storage selection => update basePrice & refresh
+        document.querySelectorAll('.storage-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.storage-btn')
+                    .forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                basePrice = parseInt(btn.getAttribute('data-price'), 10);
+                updateDisplayedPrice();
+            });
+        });
+    </script>
+
+    <script>
+        document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+            // Gather product info
+            const name = 'TCL 65 4K Smart UHD TV';
+            const img = document.getElementById('product-image').src;
+            const color = document.querySelector('.color-btn.selected').textContent;
+            const storage = document.querySelector('.storage-btn.selected').textContent;
+            const priceText = document.getElementById('product-price').textContent.replace(/[₱,\s]/g, '');
+            const unitPrice = parseInt(priceText, 10) / parseInt(document.getElementById('qty-value').textContent, 10);
+            const qty = parseInt(document.getElementById('qty-value').textContent, 10);
+
+            const item = { name, img, color, storage, unitPrice, qty };
+
+            // Read existing cart or start fresh
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            cart.push(item);
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            // Go to cart page
+            window.location.href = 'cart.html';
+        });
+    </script>
+<script>
+        document.querySelector('.action-btn.primary').addEventListener('click', function () {
+            // Gather product info
+            const name = 'TCL 65 4K Smart UHD TV';
+            const img = document.getElementById('product-image').src;
+            const color = document.querySelector('.color-btn.selected').textContent;
+            const storage = document.querySelector('.storage-btn.selected').textContent;
+            const priceText = document.getElementById('product-price').textContent.replace(/[₱,\s]/g, '');
+            const unitPrice = parseInt(priceText, 10) / parseInt(document.getElementById('qty-value').textContent, 10);
+            const qty = parseInt(document.getElementById('qty-value').textContent, 10);
+
+            const item = { name, img, color, storage, unitPrice, qty };
+
+            // Save as checkoutItems (single item array) and total price
+            localStorage.setItem('checkoutItems', JSON.stringify([item]));
+            localStorage.setItem('checkoutTotal', (unitPrice * qty));
+
+            // Redirect to checkout page
+            window.location.href = 'checkout.html';
+        });
+    </script>
+
+
+
+
+
+    <!-- Add this under the buyers gallery section -->
+    <script>
+        // --- Advanced Review Submission with Star Rating and Rating Bars (Persistent) ---
+
+        let reviews2 = [];
+        let selectedRating = 0;
+
+        // Star rating logic (in-line, hoverable, and persistent)
+        document.addEventListener('DOMContentLoaded', function () {
+            // Star rating event listeners for modal
+            const starRadios = document.querySelectorAll('.star-rating input[type="radio"]');
+            const starLabels = document.querySelectorAll('.star-rating label');
+            // Set selectedRating if a star is checked (for reload)
+            const checked = document.querySelector('.star-rating input[type="radio"]:checked');
+            selectedRating = checked ? parseInt(checked.value) : 0;
+
+            // Hover effect for stars
+            starLabels.forEach((label, idx) => {
+                label.addEventListener('mouseenter', function () {
+                    highlightStars(idx + 1);
+                });
+                label.addEventListener('mouseleave', function () {
+                    highlightStars(selectedRating);
+                });
+                label.addEventListener('click', function () {
+                    selectedRating = 5 - idx; // Because of RTL direction
+                    highlightStars(selectedRating);
+                });
+            });
+
+            function highlightStars(rating) {
+                starLabels.forEach((label, idx) => {
+                    if ((5 - idx) <= rating) {
+                        label.style.color = "#f5b301";
+                    } else {
+                        label.style.color = "#ccc";
+                    }
+                });
+            }
+
+            // Reset stars on modal open
+            window.openModal = function () {
+                document.getElementById("reviewModal").classList.add("active");
+                selectedRating = 0;
+                starRadios.forEach(r => r.checked = false);
+                highlightStars(0);
+            };
+            window.closeModal = function () {
+                document.getElementById("reviewModal").classList.remove("active");
+            };
+
+            // Load reviews from localStorage on page load
+            const saved = localStorage.getItem('buyersGalleryReviews');
+            if (saved) {
+                reviews2 = JSON.parse(saved);
+                renderReviews();
+                updateRatingBars();
+                updateAverageScore();
+            } else {
+                updateRatingBars();
+                updateAverageScore();
+            }
+        });
+
+        // Review submission
+        function submitReview() {
+            const name = document.getElementById('reviewerName').value.trim();
+            const text = document.getElementById('reviewText').value.trim();
+            const rating = selectedRating;
+            const imageInput = document.getElementById('reviewImage');
+            let imageData = "";
+
+            if (!name || !text || !rating) {
+                alert("Please enter your name, review, and select a star rating.");
+                return;
+            }
+
+            // Read image as base64 if provided
+            if (imageInput.files && imageInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    imageData = e.target.result;
+                    saveAndAppendReview({
+                        name,
+                        text,
+                        imageData,
+                        rating: parseInt(rating),
+                        date: new Date().toISOString()
+                    });
+                };
+                reader.readAsDataURL(imageInput.files[0]);
+            } else {
+                saveAndAppendReview({
+                    name,
+                    text,
+                    imageData: "",
+                    rating: parseInt(rating),
+                    date: new Date().toISOString()
+                });
+            }
+
+            // Clear form
+            document.getElementById('reviewerName').value = '';
+            document.getElementById('reviewText').value = '';
+            document.getElementById('reviewImage').value = '';
+            document.querySelectorAll('.star-rating input[type="radio"]').forEach(radio => radio.checked = false);
+            selectedRating = 0;
+            document.querySelectorAll('.star-rating label').forEach(label => label.style.color = "#ccc");
+
+            closeModal();
+        }
+
+        function saveAndAppendReview(review) {
+            reviews2.unshift(review);
+            localStorage.setItem('buyersGalleryReviews', JSON.stringify(reviews2));
+            renderReviews();
+            updateRatingBars();
+            updateAverageScore();
+        }
+
+        function appendReviewToGallery(review) {
+            const gallery = document.getElementById('buyersGallery');
+            const wrapper = document.createElement('div');
+            wrapper.className = "buyers-gallery-item";
+            wrapper.style.display = "flex";
+            wrapper.style.flexDirection = "column";
+            wrapper.style.alignItems = "center";
+            wrapper.style.justifyContent = "flex-start";
+            wrapper.style.background = "#fff";
+            wrapper.style.borderRadius = "10px";
+            wrapper.style.boxShadow = "0 2px 8px rgba(31,72,126,0.07)";
+            wrapper.style.padding = "10px 12px";
+            wrapper.style.margin = "8px";
+            wrapper.style.minWidth = "120px";
+            wrapper.style.maxWidth = "140px";
+            wrapper.style.wordBreak = "break-word";
+
+            if (review.imageData) {
+                const img = document.createElement('img');
+                img.src = review.imageData;
+                img.alt = review.name || "Buyer image";
+                img.width = 100;
+                img.height = 80;
+                img.style.objectFit = "cover";
+                img.style.borderRadius = "7px";
+                img.style.marginBottom = "7px";
+                wrapper.appendChild(img);
+            }
+            if (review.name || review.text) {
+                const cap = document.createElement('div');
+                cap.style.fontSize = "0.85rem";
+                cap.style.color = "#1f487e";
+                cap.style.fontWeight = "bold";
+                cap.style.marginBottom = "2px";
+                cap.style.textAlign = "center";
+                cap.innerText = review.name ? review.name : "";
+                wrapper.appendChild(cap);
+
+                // Star rating display
+                if (review.rating && review.rating > 0) {
+                    const starsDiv = document.createElement('div');
+                    starsDiv.style.textAlign = "center";
+                    starsDiv.style.margin = "2px 0 4px 0";
+                    for (let i = 1; i <= 5; i++) {
+                        const star = document.createElement('span');
+                        star.innerHTML = i <= review.rating ? "&#9733;" : "&#9734;";
+                        star.style.color = i <= review.rating ? "#f5b301" : "#b6c6e3";
+                        star.style.fontSize = "1.1rem";
+                        starsDiv.appendChild(star);
+                    }
+                    wrapper.appendChild(starsDiv);
+                }
+
+                if (review.text) {
+                    const textDiv = document.createElement('div');
+                    textDiv.style.fontSize = "0.8rem";
+                    textDiv.style.color = "#333";
+                    textDiv.style.textAlign = "center";
+                    textDiv.innerText = review.text;
+                    wrapper.appendChild(textDiv);
+                }
+            }
+            gallery.appendChild(wrapper);
+        }
+
+        // Render all reviews from array (for reload)
+        function renderReviews() {
+            const gallery = document.getElementById('buyersGallery');
+            gallery.innerHTML = '';
+            reviews2.forEach(appendReviewToGallery);
+            updateRatingBars();
+            updateAverageScore();
+        }
+
+        // Update rating bars and average score
+        function updateRatingBars() {
+            const counts = [0, 0, 0, 0, 0]; // 5,4,3,2,1 stars
+            reviews2.forEach(r => {
+                if (r.rating >= 1 && r.rating <= 5) counts[5 - r.rating]++;
+            });
+            const total = reviews2.length || 1;
+            for (let i = 5; i >= 1; i--) {
+                const bar = document.querySelector('.bar-' + i);
+                if (bar) {
+                    const percent = (counts[5 - i] / total) * 100;
+                    bar.style.width = percent + "%";
+                    bar.style.background = percent > 0 ? "#1f487e" : "#d7d9eb";
+                }
+            }
+        }
+
+        function updateAverageScore() {
+            const avgScoreElem = document.querySelector('.avg-score .score');
+            const countElem = document.querySelector('.avg-score .count');
+            const starsElem = document.querySelector('.avg-score .stars');
+            if (!reviews2.length) {
+                avgScoreElem.textContent = "0.0";
+                countElem.textContent = "No Reviews";
+                starsElem.innerHTML = "☆☆☆☆☆";
+                return;
+            }
+            const avg = (reviews2.reduce((sum, r) => sum + (r.rating || 0), 0) / reviews2.length).toFixed(1);
+            avgScoreElem.textContent = avg;
+            countElem.textContent = `${reviews2.length} Review${reviews2.length > 1 ? "s" : ""}`;
+            let starHTML = "";
+            for (let i = 1; i <= 5; i++) {
+                starHTML += i <= Math.round(avg) ? "★" : "☆";
+            }
+            starsElem.innerHTML = starHTML;
+        }
+    </script>
+</body>
+
+</html>

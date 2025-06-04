@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About TechHaven</title>
+    <style>
+        /* ===== Global Styles ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+        }
+
+        /* Header Styles */
+        header {
+            width: 100vw;
+            min-width: 100vw;
+            left: 0;
+            right: 0;
+            margin: 0;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: black;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo img {
+            display: block;
+            max-width: 130px;
+            max-height: 30px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-menu li {
+            margin-left: 25px;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+
+        .nav-icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-icons img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .nav-icons div {
+            margin-left: 15px;
+            cursor: pointer;
+        }
+
+        /* Mobile menu button */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 24px;
+            height: 18px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 150;
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+
+        /* Apple-style Search Container */
+        .search-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+            z-index: 200;
+        }
+
+        .search-container.active {
+            display: flex;
+            transform: translateY(0);
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            width: 60%;
+            max-width: 600px;
+            padding: 0 15px;
+            border-radius: 8px 8px 0 0;
+            background-color: #ffffff;
+            margin-top: 40px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10), 0 1.5px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        .search-icon {
+            color: #6e6e73;
+            margin-right: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .close-icon {
+            color: #6e6e73;
+            cursor: pointer;
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="search"] {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #333;
+            font-size: 14px;
+            width: 100%;
+            padding: 10px 0;
+        }
+
+        /* ===== About Content ===== */
+        .about-container {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            flex: 1;
+        }
+
+        .about-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .about-header h1 {
+            color: black;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+
+        .about-content {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .about-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .mission-statement {
+            font-style: italic;
+            border-left: 3px solid black;
+            padding-left: 1rem;
+            margin: 2rem 0;
+            color: #555;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            background-image: url(images/footer.jpg);
+            color: white;
+            padding: 1rem 1.5rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            font-size: 1rem;
+            margin-top: auto;
+        }
+
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            max-width: 300px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-right a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-bottom {
+            width: 100%;
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.75rem;
+        }
+
+        /* ===== Responsive Styles ===== */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-container {
+                width: 100%;
+                margin: 1rem 0;
+            }
+
+            .about-container {
+                padding: 0 1rem;
+            }
+
+            .footer-right {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-top: 1rem;
+                gap: 0.5rem;
+            }
+        }
+
+        /* ===== Responsive Styles ===== */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-container {
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            .faq-container {
+                padding: 0 1rem;
+            }
+
+            .footer-right {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-top: 1rem;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Apple-style Search Container */
+        .search-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(31, 72, 126, 0.95);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+            z-index: 200;
+        }
+
+        .search-container.active {
+            display: flex;
+            transform: translateY(0);
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            width: 60%;
+            max-width: 600px;
+            padding: 0 15px;
+            border-radius: 8px 8px 0 0;
+            background-color: #ffffff;
+            margin-top: 40px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10), 0 1.5px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        .search-icon {
+            color: #6e6e73;
+            margin-right: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .close-icon {
+            color: #6e6e73;
+            cursor: pointer;
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="search"] {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #333;
+            font-size: 14px;
+            width: 100%;
+            padding: 10px 0;
+        }
+
+        /* Quick Links for Search */
+        .search-quick-links {
+            position: relative;
+            width: 60%;
+            max-width: 600px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 8px 8px;
+            padding: 20px;
+            z-index: 190;
+            display: none;
+        }
+
+        .search-quick-links.active {
+            display: block;
+        }
+
+        .search-quick-links h3 {
+            margin-bottom: 15px;
+            color: #1d1d1f;
+            font-size: 14px;
+        }
+
+        .quick-link {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            color: black;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .quick-link:hover {
+            padding: 5px;
+            border-radius: 3px;
+            background-color: lightgray
+        }
+
+        .quick-link span {
+            margin-left: 8px;
+        }
+
+        .arrow-icon {
+            margin-right: 10px;
+        }
+
+        /* Responsive Styles */
+        /* Responsive for search-quick-links */
+        @media (max-width: 600px) {
+            .search-quick-links {
+                width: 100vw;
+                max-width: 100vw;
+                left: 0;
+                right: 0;
+                border-radius: 0 0 8px 8px;
+                padding: 12px 6px;
+                font-size: 15px;
+                box-sizing: border-box;
+            }
+
+            .search-quick-links h3 {
+                font-size: 15px;
+                margin-bottom: 10px;
+            }
+
+            .quick-link {
+                font-size: 15px;
+                padding: 12px 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .search-quick-links {
+                position: static;
+                margin-top: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+
+            .product-grid,
+            .category-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+
+            .hero-content {
+                max-width: 400px;
+            }
+
+            .hero h1 {
+                font-size: 16px;
+
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 48px;
+                left: -100%;
+                width: 70%;
+                max-width: 300px;
+                height: calc(100vh - 50px);
+                background: linear-gradient(135deg,
+                        rgba(0, 0, 0, 0.95),
+                        rgba(146, 172, 202, 0.4));
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px;
+                transition: left 0.3s ease;
+                z-index: 90;
+                box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-menu li {
+                margin: 15px 0;
+                width: 100%;
+            }
+
+            .logo {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 120;
+            }
+
+            .nav-menu a {
+                font-size: 16px;
+                display: block;
+                width: 100%;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .menu-toggle.active span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .hero-content {
+                max-width: 100%;
+                margin: 0 20px;
+                text-align: center;
+            }
+
+            .hero {
+                height: 50vh;
+            }
+
+            .product-grid,
+            .category-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 20px;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                padding: 0 20px;
+            }
+
+            .newsletter-form input {
+                border-radius: 5px;
+                margin-bottom: 10px;
+                width: 100%;
+            }
+
+            .newsletter-form button {
+                border-radius: 5px;
+                padding: 12px;
+                width: 100%;
+            }
+
+            .search-box,
+            .search-quick-links {
+                width: 90%;
+                max-width: none;
+            }
+
+            .footer-column {
+                flex: 0 0 50%;
+                margin-bottom: 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                min-height: 300px;
+                height: 40vh;
+            }
+
+            .hero h1 {
+                font-size: 10px;
+                margin-bottom: 10px;
+            }
+
+            .hero p {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+
+            .btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
+            }
+
+            .product-img {
+                height: 150px;
+            }
+
+            .product-title {
+                font-size: 14px;
+            }
+
+            .product-price {
+                font-size: 16px;
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+
+            .category-card {
+                height: 120px;
+            }
+
+            .category-overlay {
+                font-size: 16px;
+            }
+
+            .footer-column {
+                flex: 0 0 100%;
+            }
+        }
+
+        /* Place this in your <style> section or update your responsive CSS */
+
+        @media (max-width: 768px) {
+            .nav-icons {
+                position: static;
+                margin: 20px 0 0 0;
+                gap: 1rem;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                width: 100%;
+            }
+
+            .navbar {
+                flex-wrap: wrap;
+            }
+
+            /* Move nav-icons inside nav-menu when menu is open */
+            .nav-menu {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-menu .nav-icons {
+                display: flex;
+            }
+
+            /* Hide nav-icons in header (outside menu) on mobile */
+            .navbar>.nav-icons {
+                display: none;
+            }
+        }
+
+        /* Show nav-icons in header on desktop */
+        @media (min-width: 769px) {
+            .navbar>.nav-icons {
+                display: flex;
+            }
+
+            .nav-menu .nav-icons {
+                display: none !important;
+            }
+        }
+
+        .nav-icons img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .nav-icons div {
+            margin-left: 15px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="navbar">
+                <button class="menu-toggle" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu" id="navMenu">
+                    <div class="nav-icons">
+                        <div class="search-icon" id="searchIcon"><img src="images/search icon.png"></div>
+                        <div class="login-icon"><a href="#"><img src="images/account icon.png"></a></div>
+                        <div class="cart-icon"><a href="cart.html"><img src="images/basket icon.png" alt="Cart"></a>
+                        </div>
+                    </div>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                </ul>
+                <a href="index.html" class="logo"><img src="images/logo.png" width="100px"></a>
+                <div class="nav-icons">
+                    <div class="search-icon" id="searchIcon"><a><img src="images/search icon.png"><a></a></div>
+                    <div class="login-icon"><a href="login.html"><img src="images/account icon.png"></a></div>
+                    <div class="cart-icon"><a href="cart.html"><img src="images/basket icon.png" alt="Cart"></a></div>
+                </div>
+
+                <!-- Apple-style Search Container -->
+                <div class="search-container" id="searchContainer">
+                    <div class="search-box">
+                        <div class="search-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#666"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                            </svg>
+                        </div>
+                        <input type="search" placeholder="Search TechHaven..." id="searchInput">
+                        <div class="close-icon" id="closeSearch">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#666"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="search-quick-links" id="searchQuickLinks">
+                        <h3>Quick Links</h3>
+                        <a href="#" class="quick-link">
+                            <div class="arrow-icon">→</div>
+                            <span>Smartphones</span>
+                        </a>
+                        <a href="#" class="quick-link">
+                            <div class="arrow-icon">→</div>
+                            <span>Laptops</span>
+                        </a>
+                        <a href="#" class="quick-link">
+                            <div class="arrow-icon">→</div>
+                            <span>Appliances</span>
+                        </a>
+                        <a href="#" class="quick-link">
+                            <div class="arrow-icon">→</div>
+                            <span>Electronics</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== About Content ===== -->
+    <div class="about-container">
+        <div class="about-header">
+            <h1>About TechHaven</h1>
+        </div>
+        
+        <div class="about-content">
+            <p>Welcome to TECHHAVEN—your trusted source for discovering the latest in technology and electronics. We're here to help you cut through the noise and find the gadgets that actually make your life better.</p>
+            
+            <div class="mission-statement">
+                <p>Our mission is simple: bring clarity, quality, and confidence to your tech shopping experience. We aim to make every step—from browsing to buying—straightforward and enjoyable.</p>
+            </div>
+            
+            <p>We curate products with care, share insights you can trust, and stay ahead of trends so you don't have to. At TECHHAVEN, it's not just about what's new—it's about what's right for you.</p>
+            
+            <p>Founded with a passion for technology and a commitment to customer satisfaction, we've grown from a small startup to a trusted name in the electronics industry. Our team of experts carefully selects each product in our inventory, ensuring you get only the best quality items that deliver real value.</p>
+        </div>
+    </div>
+
+    <!-- ===== Footer Section ===== -->
+    <footer>
+        <div class="footer-left">
+            <div><strong>Connect with us</strong></div>
+            <div class="social-icons">
+                <a href="#"><img src="images/fb icon.png" width="20" alt="Facebook"></a>
+                <a href="#"><img src="images/instagram icon.png" width="20" alt="Instagram"></a>
+                <a href="#"><img src="images/gmail icon.png" width="20" alt="Email"></a>
+                <a href="#"><img src="images/x icon.png" width="20" alt="Twitter"></a>
+            </div>
+            <p><strong>Customer Support</strong></p> 
+            <p>Email: support@techhaven.com<br>Phone: +1 (800) 123-4567<br>Hours: Monday–Friday, 9 AM–6 PM</p>
+        </div>
+        <div class="footer-right">
+            <a href="feedback.html">Feedback</a>
+            <a href="faq.html">FAQ's</a>
+            <a href="terms.html">Terms of Service</a>
+            <a href="privacy.html">Privacy Policy</a>
+        </div>
+        <div class="footer-bottom">
+            Copyright © 2025 TECHHAVEN. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+       
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get all necessary elements
+            const searchIcon = document.getElementById('searchIcon');
+            const searchContainer = document.getElementById('searchContainer');
+            const closeSearch = document.getElementById('closeSearch');
+            const searchInput = document.getElementById('searchInput');
+            const searchQuickLinks = document.getElementById('searchQuickLinks');
+            const statusMessage = document.getElementById('statusMessage');
+
+            // Function to display status message
+            function showStatusMessage(message) {
+                statusMessage.textContent = message;
+                statusMessage.classList.add('active');
+
+                // Hide status message after 3 seconds
+                setTimeout(function () {
+                    statusMessage.classList.remove('active');
+                }, 3000);
+            }
+
+            // Show search container when search icon is clicked
+            searchIcon.addEventListener('click', function (e) {
+                e.preventDefault();
+                searchContainer.style.display = 'flex';
+                setTimeout(() => {
+                    searchContainer.classList.add('active');
+                }, 10);
+                searchQuickLinks.classList.add('active');
+                searchInput.focus();
+                showStatusMessage("Search activated");
+            });
+
+            // Hide search container when close icon is clicked
+            closeSearch.addEventListener('click', function () {
+                searchContainer.classList.remove('active');
+                searchQuickLinks.classList.remove('active');
+                searchInput.value = '';
+                setTimeout(() => {
+                    searchContainer.style.display = 'none';
+                }, 300);
+                showStatusMessage("Search closed");
+            });
+
+            // Handle search submission
+            searchInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (searchInput.value.trim() !== '') {
+                        showStatusMessage(`Searching for: "${searchInput.value}"`);
+                        setTimeout(function () {
+                            searchInput.value = '';
+                            searchContainer.classList.remove('active');
+                            searchQuickLinks.classList.remove('active');
+                            setTimeout(() => {
+                                searchContainer.style.display = 'none';
+                            }, 300);
+                        }, 1000);
+                    }
+                }
+            });
+
+            // Prevent clicks inside search container from closing it
+            searchContainer.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+            searchQuickLinks.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+        });
+
+        // Add this inside your <script> tag, after the DOMContentLoaded event starts
+
+        // Responsive menu functionality
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        // Toggle menu open/close
+        menuToggle.addEventListener('click', function () {
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+        });
+
+        // Hide menu when overlay is clicked (for mobile)
+        menuOverlay.addEventListener('click', function () {
+            menuToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+        });
+
+        // Optional: Hide menu when a nav link is clicked (for single-page feel)
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function () {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            });
+        });
+
+        // Add this at the end of your <script> tag
+        document.addEventListener('DOMContentLoaded', function () {
+            // Hero slider logic
+            const heroSlides = document.querySelectorAll('.hero-slide');
+            const heroPrev = document.getElementById('heroPrev');
+            const heroNext = document.getElementById('heroNext');
+            const heroDotsContainer = document.getElementById('heroSliderDots');
+            let heroCurrent = 0;
+            let heroSliderTimer = null;
+
+            // Set background images from img attribute
+            heroSlides.forEach(slide => {
+                const img = slide.getAttribute('img');
+                if (img) slide.style.backgroundImage = `url('${img}')`;
+            });
+
+            // Create dots
+            heroSlides.forEach((_, idx) => {
+                const dot = document.createElement('span');
+                dot.className = 'hero-slider-dot' + (idx === 0 ? ' active' : '');
+                dot.addEventListener('click', () => {
+                    showHeroSlide(idx);
+                    startHeroSliderTimer();
+                });
+                heroDotsContainer.appendChild(dot);
+            });
+            const heroDots = heroDotsContainer.querySelectorAll('.hero-slider-dot');
+
+            function showHeroSlide(idx) {
+                heroSlides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === idx);
+                    heroDots[i].classList.toggle('active', i === idx);
+                });
+                heroCurrent = idx;
+            }
+
+            function nextHeroSlide() {
+                let next = (heroCurrent + 1) % heroSlides.length;
+                showHeroSlide(next);
+            }
+
+            function prevHeroSlide() {
+                let prev = (heroCurrent - 1 + heroSlides.length) % heroSlides.length;
+                showHeroSlide(prev);
+            }
+
+            function startHeroSliderTimer() {
+                if (heroSliderTimer) clearInterval(heroSliderTimer);
+                heroSliderTimer = setInterval(nextHeroSlide, 5000);
+            }
+
+            heroNext.addEventListener('click', () => {
+                nextHeroSlide();
+                startHeroSliderTimer();
+            });
+            heroPrev.addEventListener('click', () => {
+                prevHeroSlide();
+                startHeroSliderTimer();
+            });
+
+            showHeroSlide(0);
+            startHeroSliderTimer();
+        });
+    </script>
+    
+</body>
+</html>

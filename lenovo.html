@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HP OmniBook X Laptops</title>
+    <style>
+       /* Header Styles */
+        header {
+            width: 100vw;
+            min-width: 100vw;
+            left: 0;
+            right: 0;
+            margin: 0;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: black;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo img {
+            display: block;
+            max-width: 130px;
+            max-height: 30px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            transition: left 0.3s;
+        }
+
+        .nav-menu li {
+            margin-left: 25px;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+
+        .nav-icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-icons img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .nav-icons div {
+            margin-left: 15px;
+            cursor: pointer;
+        }
+
+        /* Mobile menu button */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 24px;
+            height: 18px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 150;
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+
+        /* Apple-style Search Container */
+        .search-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(31, 72, 126, 0.95);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+            z-index: 200;
+        }
+
+        .search-container.active {
+            display: flex;
+            transform: translateY(0);
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            width: 60%;
+            max-width: 600px;
+            padding: 0 15px;
+            border-radius: 8px 8px 0 0;
+            background-color: #ffffff;
+            margin-top: 40px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10), 0 1.5px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        .search-icon {
+            color: #6e6e73;
+            margin-right: 0px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .close-icon {
+            color: #6e6e73;
+            cursor: pointer;
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="search"] {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #333;
+            font-size: 14px;
+            width: 100%;
+            padding: 10px 0;
+        }
+
+        /* Quick Links for Search */
+        .search-quick-links {
+            position: relative;
+            width: 60%;
+            max-width: 600px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 8px 8px;
+            padding: 20px;
+            z-index: 190;
+            display: none;
+        }
+
+        .search-quick-links.active {
+            display: block;
+        }
+
+        .search-quick-links h3 {
+            margin-bottom: 15px;
+            color: #1d1d1f;
+            font-size: 14px;
+        }
+
+        .quick-link {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            color: black;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .quick-link:hover {
+            padding: 5px;
+            border-radius: 3px;
+            background-color: lightgray
+        }
+
+        .quick-link span {
+            margin-left: 8px;
+        }
+
+        .arrow-icon {
+            margin-right: 10px;
+        }
+
+        /* Status message */
+        .status-message {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border-radius: 5px;
+            font-size: 12px;
+            z-index: 1000;
+            display: none;
+        }
+
+        .status-message.active {
+            display: block;
+            animation: fadeInOut 3s forwards;
+        }
+
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+            }
+
+            15% {
+                opacity: 1;
+            }
+
+            85% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* ===== Carousel Wrapper ===== */
+        .carousel-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 100%;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .carousel {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            gap: 1.5rem;
+            padding: 1rem 2rem;
+            scrollbar-width: none;
+        }
+
+        .carousel::-webkit-scrollbar {
+            display: none;
+        }
+
+        .card {
+            flex: 0 0 auto;
+            width: 220px;
+            background-color: rgba(65, 135, 177, 0.15);
+            border-radius: 16px;
+            text-align: center;
+            padding: 1.25rem 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(65, 135, 177, 0.3);
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-size: 1rem;
+            margin: 0.5rem 0 0.25rem;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: #444;
+            margin: 0.2rem 0;
+        }
+
+        .price {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #000;
+            margin-top: 0.5rem;
+        }
+
+        .carousel-btn {
+            background-color: white;
+            color: #1d1d1f;
+            border: none;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-size: 1.5rem;
+        }
+
+        .carousel-btn:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .carousel-btn.left {
+            left: 16px;
+        }
+
+        .carousel-btn.right {
+            right: 16px;
+        }
+
+        /* ===== Footer ===== */
+        footer:hover a {
+            text-decoration: underline;
+        }
+
+        footer {
+            background-image: url(images/footer.jpg);
+            color: white;
+            padding: 1rem 1.5rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            font-size: 1rem;
+        }
+
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            max-width: 300px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-right a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-bottom {
+            width: 100%;
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.75rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .slider-container {
+            position: relative;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .text-content {
+            position: absolute;
+            bottom: 20%;
+            left: 10%;
+            color: white;
+            font-weight: bold;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        footer p {
+            font-size: 1rem;
+            margin-bottom: 30px;
+        }
+
+        .learn-more-btn {
+            padding: 10px 20px;
+            background-color: #1f487e;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .learn-more-btn:hover {
+            background-color: #144e7c;
+        }
+
+        button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            font-size: 2rem;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        /* ===== Responsive Design ===== */
+        @media (max-width: 768px) {
+
+            /* Adjust product card width for tablets */
+            .card {
+                width: 180px;
+            }
+
+            .carousel-wrapper {
+                padding: 0 1rem;
+            }
+
+            .slider-container {
+                height: auto;
+            }
+
+            .slide-image {
+                height: auto;
+            }
+
+            .text-content {
+                bottom: 15%;
+                left: 5%;
+                font-size: 1.2rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            /* Adjust product card width for mobile */
+            .card {
+                width: 150px;
+            }
+
+            .carousel-wrapper {
+                padding: 0;
+            }
+
+            .slider-container {
+                height: auto;
+            }
+
+            .slide-image {
+                height: auto;
+            }
+
+            .text-content {
+                bottom: 10%;
+                left: 5%;
+                font-size: 1rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            p {
+                font-size: 0.9rem;
+            }
+
+            .footer-left,
+            .footer-right {
+                text-align: center;
+            }
+
+            .footer-left {
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* ===== Half Banner ===== */
+        .half-banner {
+            width: 100vw;
+            min-height: 300px;
+            background: black;
+            display: flex;
+            align-items: flex-end;
+            padding-bottom: 3.5rem;
+            box-sizing: border-box;
+        }
+
+        .half-banner-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            padding-left: 6vw;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-size: 16px;
+            margin-bottom: 1.2rem;
+        }
+
+        .breadcrumb a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .breadcrumb .current {
+            color: #888;
+            font-weight: 500;
+        }
+
+        .half-banner h1 {
+            color: #fff;
+            font-size: 50px;
+            font-weight: 700;
+            letter-spacing: -2px;
+            margin: 0;
+            line-height: 1;
+        }
+
+        @media (max-width: 900px) {
+            .half-banner {
+                min-height: 200px;
+                padding-bottom: 2rem;
+            }
+            .half-banner-content {
+                padding-left: 4vw;
+            }
+            .half-banner h1 {
+                font-size: 3rem;
+            }
+            .breadcrumb {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .half-banner {
+                min-height: 120px;
+                padding-bottom: 1.2rem;
+            }
+            .half-banner-content {
+                padding-left: 3vw;
+            }
+            .half-banner h1 {
+                font-size: 2rem;
+            }
+            .breadcrumb {
+                font-size: 0.95rem;
+            }
+        }
+
+         .image-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* allows wrapping on smaller screens */
+    gap: 80px;
+    margin: 20px auto;
+    max-width: 1000px; /* optional, controls max size */
+    padding: 0 10px;
+}
+
+.image-row img {
+    width: 100px; /* Fixed size for consistent layout */
+    height: auto;
+    border-radius: 8px;
+    transition: opacity 0.3s ease;
+}
+
+.image-row img:hover {
+    opacity: 0.7;
+}
+.page-title {
+      font-size: 50px;
+      margin-left: 20px;
+    }
+
+    .brands {
+      font-size: 18px;
+      margin-left: 160px;
+    }
+
+    .image-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 80px;
+      margin: 20px auto;
+      max-width: 1000px;
+      padding: 0 10px;
+    }
+
+    .image-row img {
+      width: 100px;
+      height: auto;
+      border-radius: 8px;
+      transition: opacity 0.3s ease;
+    }
+
+    .image-row img:hover {
+      opacity: 0.7;
+    }
+
+    /* Responsive */
+        @media (max-width: 992px) {
+
+            .product-grid,
+            .category-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+
+            .hero-content {
+                max-width: 400px;
+            }
+
+            .hero h1 {
+                font-size: 16px;
+
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 48px;
+                left: -100%;
+                width: 70%;
+                max-width: 300px;
+                height: calc(100vh - 50px);
+                background: linear-gradient(135deg,
+                        rgba(0, 0, 0, 0.95),
+                        rgba(146, 172, 202, 0.4));
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px;
+                transition: left 0.3s ease;
+                z-index: 90;
+                box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-menu li {
+                margin: 15px 0;
+                width: 100%;
+            }
+
+            .logo {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 120;
+            }
+
+            .nav-menu a {
+                font-size: 16px;
+                display: block;
+                width: 100%;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .menu-toggle.active span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .hero-content {
+                max-width: 100%;
+                margin: 0 20px;
+                text-align: center;
+            }
+
+            .hero {
+                height: 50vh;
+            }
+
+            .product-grid,
+            .category-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 20px;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                padding: 0 20px;
+            }
+
+            .newsletter-form input {
+                border-radius: 5px;
+                margin-bottom: 10px;
+                width: 100%;
+            }
+
+            .newsletter-form button {
+                border-radius: 5px;
+                padding: 12px;
+                width: 100%;
+            }
+
+            .search-box,
+            .search-quick-links {
+                width: 90%;
+                max-width: none;
+            }
+
+            .footer-column {
+                flex: 0 0 50%;
+                margin-bottom: 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                min-height: 300px;
+                height: 40vh;
+            }
+
+            .hero h1 {
+                font-size: 10px;
+                margin-bottom: 10px;
+            }
+
+            .hero p {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+
+            .btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
+            }
+
+            .product-img {
+                height: 150px;
+            }
+
+            .product-title {
+                font-size: 14px;
+            }
+
+            .product-price {
+                font-size: 16px;
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+
+            .category-card {
+                height: 120px;
+            }
+
+            .category-overlay {
+                font-size: 16px;
+            }
+
+            .footer-column {
+                flex: 0 0 100%;
+            }
+        }
+
+        /* Place this in your <style> section or update your responsive CSS */
+
+        @media (max-width: 768px) {
+            .nav-icons {
+                position: static;
+                margin: 20px 0 0 0;
+                gap: 1rem;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                width: 100%;
+            }
+
+            .navbar {
+                flex-wrap: wrap;
+            }
+
+            /* Move nav-icons inside nav-menu when menu is open */
+            .nav-menu {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-menu .nav-icons {
+                display: flex;
+            }
+
+            /* Hide nav-icons in header (outside menu) on mobile */
+            .navbar>.nav-icons {
+                display: none;
+            }
+        }
+
+        /* Show nav-icons in header on desktop */
+        @media (min-width: 769px) {
+            .navbar>.nav-icons {
+                display: flex;
+            }
+
+            .nav-menu .nav-icons {
+                display: none !important;
+            }
+        }
+
+        .nav-icons img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .nav-icons div {
+            margin-left: 15px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+     <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="navbar">
+                <button class="menu-toggle" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu" id="navMenu">
+  <div class="nav-icons">
+    <div class="search-icon" id="searchIcon"><img src="images/search icon.png"></div>
+    <div class="login-icon"><a href="#"><img src="images/account icon.png"></a></div>
+    <div class="cart-icon"><a href="cart.html"><img src="images/basket icon.png" alt="Cart"></a></div>
+  </div>
+  <li><a href="index.html">Home</a></li>
+  <li><a href="shop.html">Shop</a></li>
+  <li><a href="about.html">About Us</a></li>
+</ul>
+                <a href="#" class="logo"><img src="images/logo.png" width="100px"></a>
+                <div class="nav-icons">
+                    <div class="search-icon" id="searchIcon"><img src="images/search icon.png"></div>
+                    <div class="login-icon"><a href="#"><img src="images/account icon.png"></a></div>
+                    <div class="cart-icon"><a href="cart.html"><img src="images/basket icon.png" alt="Cart"></a></div>
+                </div>
+
+                <!-- Apple-style Search Container -->
+                <div class="search-container" id="searchContainer">
+                    <div class="search-box">
+                        <div class="search-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#666"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                            </svg>
+                        </div>
+                        <input type="search" placeholder="Search TechHaven..." id="searchInput">
+                        <div class="close-icon" id="closeSearch">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#666"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="search-quick-links" id="searchQuickLinks">
+                        <h3>Quick Links</h3>
+                        <a href="#" class="quick-link">
+                            <div class="arrow-icon">→</div>
+                            <span>Smartphones</span>
+                        </a>
+                        <a href="#" class="quick-link">
+                            <div class="arrow-icon">→</div>
+                            <span>Laptops</span>
+                        </a>
+                        <a href="#" class="quick-link">
+                            <div class="arrow-icon">→</div>
+                            <span>Appliances</span>
+                        </a>
+                        <a href="#" class="quick-link">
+                            <div class="arrow-icon">→</div>
+                            <span>Electronics</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Add this after your header and before your main content section -->
+<div class="half-banner">
+    <div class="half-banner-content">
+        <nav class="breadcrumb">
+            <a href="laptops.html">Laptop</a>
+            <span>/</span>
+            <span class="current">Lenovo</span>
+        </nav>
+        <h1>Lenovo</h1>
+    </div>
+</div>
+
+
+    <div class="slider-container">
+        <div class="slider">
+            <div class="slide active">
+                <img src="https://www.brandanddeliver.co.uk/wp-content/uploads/2021/01/LenovoYoga_CaseStudyImages_800x530px-1.png"
+                    alt="HP OmniBook X" class="slide-image">
+
+            </div>
+            <div class="slide">
+                <img src="https://i.pinimg.com/736x/8c/b2/81/8cb28161574f04a617f0179ec177f92c.jpg"
+                    alt="HP OmniBook X" class="slide-image">
+                <div class="text-content">
+
+
+                </div>
+            </div>
+            <div class="slide">
+                <img src="https://seleneartdesign.com/wp-content/uploads/2018/05/421dcc19029815.569c329672f05.png"
+                    alt="HP OmniBook X" class="slide-image">
+                <div class="text-content">
+
+                </div>
+            </div>
+            <div class="slide">
+                <img src="https://megatech.com.np/wp-content/uploads/2022/09/0-02-03-14c65c772a4f70aa96317608a54465ae4edc1e4b688063ecdfbec4ce08bf3d2b_397e807a40873591.jpg"
+                    alt="HP OmniBook X" class="slide-image">
+                <div class="text-content">
+
+
+                </div>
+            </div>
+        </div>
+        <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+        <button class="next" onclick="changeSlide(1)">&#10095;</button>
+    </div>
+
+
+
+    <!-- ===== Carousel Wrapper ===== -->
+    <section class="carousel-wrapper">
+        <button class="carousel-btn left" onclick="scrollCarousel(-1)">‹</button>
+        <div class="carousel" id="productCarousel">
+            <div class="card">
+                <a href="levono thinkpad p1.html"><img src="https://p4-ofp.static.pub//fes/cms/2024/09/11/8pnuxkm1rcxstvyqzg49ytc0y379vh510331.png"
+                        alt="HP Omen 15" width="300" /></a>
+                <h3>LENOVO ThinkPad P1 Gen 7 (16" Intel)</h3>
+                <p>Intel® Core™ Ultra 5 135H vPro® Processor</p>
+                <p class="price">₱ 134,999</p>
+            </div>
+            <div class="card">
+                <a href="levono legion pro71.html"><img 
+                    src="https://p2-ofp.static.pub//fes/cms/2025/02/14/oy7r3vdo1fee2bd6764lu0p7zdlqrs216573.png"
+                        alt="HP Envy 13" width="100" /></a>
+                <h3>LENOVO Legion Pro 7i (16", Gen 10)</h3>
+                <p>Intel® Core™ Ultra 9 275HX Processor</p>
+                <p class="price">₱ 135,999</p>
+            </div>
+            <div class="card">
+                <a href="lenovo yoga slim7.html"><img
+                        src="https://p2-ofp.static.pub//fes/cms/2025/03/06/sonu80fc3nxt9bazla5e5lv7b2voit215424.png"
+                        alt="ASUS Gaming X16 (K3605)" width="100" /></a>
+                <h3>LENOVO Yoga Slim 7 (14", Gen10)</h3>
+                <p>AMD Ryzen™ AI 5 340 Processor</p>
+                <p class="price">₱ 59,999</p>
+            </div>
+            <div class="card">
+                <a href="lenovo ideapad sil5.html"><img
+                        src="https://p2-ofp.static.pub//fes/cms/2024/09/18/itgh2jmfx53p0x9wph53dlnjvlzwpj941752.png"
+                        alt="HP Spectre 13" width="100" /></a>
+                <h3>LENOVO IdeaPad Slim 5 (15'', Gen 10)</h3>
+                <p>AMD Ryzen™ 5 7535HS Processor</p>
+                <p class="price">₱ 45,999</p>
+            </div>
+            <div class="card">
+                <a href="lenovo legion51.html"><img
+                        src="https://p1-ofp.static.pub//fes/cms/2023/11/01/fb41cs7ur75m3mnjclp6rn2ucqc94h672507.png"
+                        alt="HP Elite Dragonfly" width="100" /></a>
+                <h3>LENOVO Legion 5i (16", Gen 9)</h3>
+                <p>114th Generation Intel® Core™ i7-14650HX Processor</p>
+                <p class="price">₱ 110,999</p>
+            </div>
+            <div class="card">
+                <a href="lenovo. loq.html"><img
+                        src="https://p3-ofp.static.pub//fes/cms/2024/02/13/jk8n4yscxrxtllkjme7upw7qqvg55r832585.png"
+                        alt="HP 15s" width="100" /></a>
+                <h3>LENOVO LOQ 15IRX9</h3>
+                <p>13th Generation Intel® Core™ i5-13450HX Processor</p>
+                <p class="price">₱ 56,999</p>
+            </div>
+
+        </div>
+        <button class="carousel-btn right" onclick="scrollCarousel(1)">›</button>
+    </section>
+
+    <!-- ===== Footer Section ===== -->
+    <footer>
+        <div class="footer-left">
+            <strong>Connect with us</strong>
+            <div class="social-icons">
+                <a href="#"><img src="images/fb icon.png" width="20"></a>
+                <a href="#"><img src="images/instagram icon.png" width="20"></a>
+                <a href="#"><img src="images/gmail icon.png" width="20"></a>
+                <a href="#"><img src="images/x icon.png" width="20"></a>
+            </div>
+            <p><strong>Customer Support</strong><br>
+                Email: support@techhaven.com<br>
+                Phone: +1 (800) 123-4567<br>
+                Mon–Fri, 9 AM–6 PM</p>
+        </div>
+        <div class="footer-right">
+            <a href="feedback.html">Feedback</a>
+            <a href="faq.html">FAQ's</a>
+            <a href="terms.html">Terms of Service</a>
+            <a href="privacy.html">Privacy Policy</a>
+        </div>
+        <div class="footer-bottom">
+            © 2025 TECHHAVEN. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        function scrollCarousel(direction) {
+            const carousel = document.getElementById('productCarousel');
+            const scrollAmount = 250; // Adjust this value based on card width
+            carousel.scrollBy({
+                left: direction * scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+
+            if (currentSlide < 0) {
+                currentSlide = slides.length - 1;
+            } else if (currentSlide >= slides.length) {
+                currentSlide = 0;
+            }
+
+            updateSlidePosition();
+        }
+
+        function updateSlidePosition() {
+            const slider = document.querySelector('.slider');
+            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+    </script>
+
+    
+</body>
+
+</html>

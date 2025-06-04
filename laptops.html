@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TechHaven</title>
+    <style>
+        /* ===== Global Styles ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        header {
+            width: 100vw;
+            min-width: 100vw;
+            left: 0;
+            right: 0;
+            margin: 0;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: black;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo img {
+            display: block;
+            max-width: 130px;
+            max-height: 30px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-menu li {
+            margin-left: 25px;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+
+        .nav-icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-icons img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .nav-icons div {
+            margin-left: 15px;
+            cursor: pointer;
+        }
+
+        /* Mobile menu button */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 24px;
+            height: 18px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 150;
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+
+        /* Apple-style Search Container */
+        .search-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(31, 72, 126, 0.95);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+            z-index: 200;
+        }
+
+        .search-container.active {
+            display: flex;
+            transform: translateY(0);
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            width: 60%;
+            max-width: 600px;
+            padding: 0 15px;
+            border-radius: 8px 8px 0 0;
+            background-color: #ffffff;
+            margin-top: 40px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10), 0 1.5px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        .search-icon {
+            color: #6e6e73;
+            margin-right: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .close-icon {
+            color: #6e6e73;
+            cursor: pointer;
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="search"] {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #333;
+            font-size: 14px;
+            width: 100%;
+            padding: 10px 0;
+        }
+
+        /* Quick Links for Search */
+        .search-quick-links {
+            position: relative;
+            width: 60%;
+            max-width: 600px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 8px 8px;
+            padding: 20px;
+            z-index: 190;
+            display: none;
+        }
+
+        .search-quick-links.active {
+            display: block;
+        }
+
+        .search-quick-links h3 {
+            margin-bottom: 15px;
+            color: #1d1d1f;
+            font-size: 14px;
+        }
+
+        .quick-link {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            color: black;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .quick-link:hover {
+            padding: 5px;
+            border-radius: 3px;
+            background-color: lightgray
+        }
+
+        .quick-link span {
+            margin-left: 8px;
+        }
+
+        .arrow-icon {
+            margin-right: 10px;
+        }
+
+        /* Status message */
+        .status-message {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border-radius: 5px;
+            font-size: 12px;
+            z-index: 1000;
+            display: none;
+        }
+
+        .status-message.active {
+            display: block;
+            animation: fadeInOut 3s forwards;
+        }
+
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+            }
+
+            15% {
+                opacity: 1;
+            }
+
+            85% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* ===== Main Content ===== */
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .main-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+        }
+
+        .main-content img:hover {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+
+        .main-left {
+            flex: 2;
+            min-width: 300px;
+        }
+
+        .main-right {
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+
+            color: black;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: lighter;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 180px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            z-index: 1;
+            margin-top: 5px;
+            margin-left: 20px;
+        }
+
+        .dropdown-content a {
+            color: #1f487e;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-weight: 500;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        h2:hover {
+            font-weight: bold;
+        }
+
+        .page-title {
+            font-size: 18px;
+            margin-left: 20px;
+        }
+
+        .brands {
+            font-size: 18px;
+            margin-left: 160px;
+        }
+
+        .image-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            /* allows wrapping on smaller screens */
+            gap: 80px;
+            margin: 20px auto;
+            max-width: 1000px;
+            /* optional, controls max size */
+            padding: 0 10px;
+        }
+
+        .image-row img {
+            width: 100px;
+            /* Fixed size for consistent layout */
+            height: auto;
+            border-radius: 8px;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-row img:hover {
+            opacity: 0.7;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            background-image: url(images/footer.jpg);
+            color: white;
+            padding: 1rem 1.5rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            font-size: 1rem;
+        }
+
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            max-width: 300px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-right a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-bottom {
+            width: 100%;
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.75rem;
+        }
+
+        p {
+            font-size: 15px;
+        }
+
+
+        /* ===== Responsive Styles ===== */
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-bar {
+                margin: 1rem 0;
+            }
+
+            .footer-right {
+                align-items: flex-start;
+                margin-top: 1rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .image-row {
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .image-row img {
+                width: 60px;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+
+            .product-grid,
+            .category-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+
+            .hero-content {
+                max-width: 400px;
+            }
+
+            .hero h1 {
+                font-size: 16px;
+
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 48px;
+                left: -100%;
+                width: 70%;
+                max-width: 300px;
+                height: calc(100vh - 50px);
+                background: linear-gradient(135deg,
+                        rgba(0, 0, 0, 0.95),
+                        rgba(146, 172, 202, 0.4));
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px;
+                transition: left 0.3s ease;
+                z-index: 90;
+                box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-menu li {
+                margin: 15px 0;
+                width: 100%;
+            }
+
+            .logo {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 120;
+            }
+
+            .nav-menu a {
+                font-size: 16px;
+                display: block;
+                width: 100%;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .menu-toggle.active span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .hero-content {
+                max-width: 100%;
+                margin: 0 20px;
+                text-align: center;
+            }
+
+            .hero {
+                height: 50vh;
+            }
+
+            .product-grid,
+            .category-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 20px;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                padding: 0 20px;
+            }
+
+            .newsletter-form input {
+                border-radius: 5px;
+                margin-bottom: 10px;
+                width: 100%;
+            }
+
+            .newsletter-form button {
+                border-radius: 5px;
+                padding: 12px;
+                width: 100%;
+            }
+
+            .search-box,
+            .search-quick-links {
+                width: 90%;
+                max-width: none;
+            }
+
+            .footer-column {
+                flex: 0 0 50%;
+                margin-bottom: 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                min-height: 300px;
+                height: 40vh;
+            }
+
+            .hero h1 {
+                font-size: 10px;
+                margin-bottom: 10px;
+            }
+
+            .hero p {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+
+            .btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
+            }
+
+            .product-img {
+                height: 150px;
+            }
+
+            .product-title {
+                font-size: 14px;
+            }
+
+            .product-price {
+                font-size: 16px;
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+
+            .category-card {
+                height: 120px;
+            }
+
+            .category-overlay {
+                font-size: 16px;
+            }
+
+            .footer-column {
+                flex: 0 0 100%;
+            }
+        }
+
+        /* Place this in your <style> section or update your responsive CSS */
+
+        @media (max-width: 768px) {
+            .nav-icons {
+                position: static;
+                margin: 20px 0 0 0;
+                gap: 1rem;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                width: 100%;
+            }
+
+            .navbar {
+                flex-wrap: wrap;
+            }
+
+            /* Move nav-icons inside nav-menu when menu is open */
+            .nav-menu {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-menu .nav-icons {
+                display: flex;
+            }
+
+            /* Hide nav-icons in header (outside menu) on mobile */
+            .navbar>.nav-icons {
+                display: none;
+            }
+        }
+
+        /* Show nav-icons in header on desktop */
+        @media (min-width: 769px) {
+            .navbar>.nav-icons {
+                display: flex;
+            }
+
+            .nav-menu .nav-icons {
+                display: none !important;
+            }
+        }
+
+        .nav-icons img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .nav-icons div {
+            margin-left: 15px;
+            cursor: pointer;
+        }
+
+        /* ===== Half Banner ===== */
+        .half-banner {
+            width: 100vw;
+            min-height: 300px;
+            background: black;
+            display: flex;
+            align-items: flex-end;
+            padding-bottom: 3.5rem;
+            box-sizing: border-box;
+        }
+
+        .half-banner-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            padding-left: 6vw;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-size: 16px;
+            margin-bottom: 1.2rem;
+        }
+
+        .breadcrumb a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .breadcrumb .current {
+            color: #888;
+            font-weight: 500;
+        }
+
+        .half-banner h1 {
+            color: #fff;
+            font-size: 50px;
+            font-weight: 700;
+            letter-spacing: -2px;
+            margin: 0;
+            line-height: 1;
+        }
+
+        @media (max-width: 900px) {
+            .half-banner {
+                min-height: 200px;
+                padding-bottom: 2rem;
+            }
+
+            .half-banner-content {
+                padding-left: 4vw;
+            }
+
+            .half-banner h1 {
+                font-size: 3rem;
+            }
+
+            .breadcrumb {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .half-banner {
+                min-height: 120px;
+                padding-bottom: 1.2rem;
+            }
+
+            .half-banner-content {
+                padding-left: 3vw;
+                justify-content: left;
+            }
+
+            .half-banner h1 {
+                font-size: 2rem;
+            }
+
+            .breadcrumb {
+                font-size: 0.95rem;
+            }
+        }
+
+        .image-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin: 20px auto;
+            max-width: 1000px;
+            padding: 0 10px;
+        }
+
+        .image-row a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-row img {
+            width: 70px;
+            height: auto;
+            border-radius: 8px;
+            transition: opacity 0.3s;
+        }
+
+        @media (max-width: 600px) {
+            .image-row {
+                gap: 30px;
+                padding: 0 2vw;
+            }
+
+            .image-row img {
+                width: 48px;
+            }
+        }
+        /* ===== Carousel Wrapper ===== */
+        .carousel-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 100%;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .carousel {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            gap: 1.5rem;
+            padding: 1rem 2rem;
+            scrollbar-width: none;
+        }
+
+        .carousel::-webkit-scrollbar {
+            display: none;
+        }
+
+        .card {
+            flex: 0 0 auto;
+            width: 220px;
+            background-color: rgba(65, 135, 177, 0.15);
+            border-radius: 16px;
+            text-align: center;
+            padding: 1.25rem 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(65, 135, 177, 0.3);
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-size: 1rem;
+            margin: 0.5rem 0 0.25rem;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: #444;
+            margin: 0.2rem 0;
+        }
+
+        .price {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #000;
+            margin-top: 0.5rem;
+        }
+
+        .carousel-btn {
+            background-color: white;
+            color: #1d1d1f;
+            border: none;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-size: 1.5rem;
+        }
+
+        .carousel-btn:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .carousel-btn.left {
+            left: 16px;
+        }
+
+        .carousel-btn.right {
+            right: 16px;
+        }
+
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .slider-container {
+            position: relative;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .text-content {
+            position: absolute;
+            bottom: 20%;
+            left: 10%;
+            color: white;
+            font-weight: bold;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1rem;
+            margin-bottom: 30px;
+        }
+
+        .learn-more-btn {
+            padding: 10px 20px;
+            background-color: #1f487e;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .learn-more-btn:hover {
+            background-color: #144e7c;
+        }
+
+        button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            font-size: 2rem;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="navbar">
+                <button class="menu-toggle" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu" id="navMenu">
+                    <div class="nav-icons">
+                        <div class="search-icon" id="searchIcon"><img src="images/search icon.png"></div>
+                        <div class="login-icon"><a href="#"><img src="images/account icon.png"></a></div>
+                        <div class="cart-icon"><a href="cart.html"><img src="images/basket icon.png" alt="Cart"></a>
+                        </div>
+                    </div>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="about.html">About Us</a></li>
+
+                </ul>
+                <a href="#" class="logo"><img src="images/logo.png" width="100px"></a>
+                <div class="nav-icons">
+                    <div class="search-icon" id="searchIcon"><img src="images/search icon.png"></div>
+                    <div class="login-icon"><a href="#"><img src="images/account icon.png"></a></div>
+                    <div class="cart-icon"><a href="cart.html"><img src="images/basket icon.png" alt="Cart"></a></div>
+                </div>
+
+                <!-- Apple-style Search Container -->
+                <div class="search-container" id="searchContainer">
+                    <div class="search-box">
+                        <div class="search-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#666"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                            </svg>
+                        </div>
+                        <input type="search" placeholder="Search TechHaven..." id="searchInput">
+                        <div class="close-icon" id="closeSearch">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#666"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="search-quick-links" id="searchQuickLinks">
+                        <h3>Quick Links</h3>
+                        <a href="#" class="quick-link">
+                            <div class="arrow-icon">→</div>
+                            <span>Smartphones</span>
+                        </a>
+                        <a href="#" class="quick-link">
+                            <div class="arrow-icon">→</div>
+                            <span>Laptops</span>
+                        </a>
+                        <a href="#" class="quick-link">
+                            <div class="arrow-icon">→</div>
+                            <span>Appliances</span>
+                        </a>
+                        <a href="#" class="quick-link">
+                            <div class="arrow-icon">→</div>
+                            <span>Electronics</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Add this after your header and before your main content section -->
+    <div class="half-banner">
+        <div class="half-banner-content">
+            <nav class="breadcrumb">
+                <a href="shop.html">Shop</a>
+                <span>/</span>
+                <span class="current">Laptop</span>
+            </nav>
+            <h1>Laptop</h1>
+        </div>
+    </div>
+    <br>
+
+    <div class="image-row">
+        <a href="hp laptop.html"><img src="images/laptop brands/hp logo.png" alt="Hp"></a>
+        <a href="asus laptop.html"><img src="images/laptop brands/Asus logo.jpg" alt="Asus"></a>
+        <a href="lenovo.html"><img src="images/laptop brands/Lenovo-Logo.png" alt="Lenovo"></a>
+        <a href="appleMacBook.html"><img src="images/smartphone brands/apple_logo.png" alt="Mac"></a>
+        <a href="dell laptop.html"><img src="images/laptop brands/Dell logo.jpg" alt="Dell"></a>
+    </div>
+    <!-- ===== Carousel Wrapper ===== -->
+      <h2>Hp</h2>
+    <section class="carousel-wrapper">
+        <button class="carousel-btn left" onclick="scrollCarousel(-1)">‹</button>
+        <div class="carousel" id="productCarousel">
+            <div class="card">
+                <a href="hp 14 laptop(AMD).html"><img
+                        src="https://www.hp.com/content/dam/sites/worldwide/personal-computers/consumer/laptops-and-2-in-1s/new/colorways/HP_14_Laptop_AMD_Natural_Silver@2x.jpg"
+                        alt="HP Omen 15" width="300" /></a>
+                <h3>HP 14" Laptop (AMD)</h3>
+                <p> AMD Ryzen 5 5500U</p>
+                <p class="price">₱ 22,999</p>
+            </div>
+            <div class="card">
+                <a href="HP 14 Eco Edition.html"><img
+                        src="https://www.hp.com/content/dam/sites/worldwide/personal-computers/consumer/laptops-and-2-in-1s/new/colorways/mHP%2014%20Laptop%20Eco%20Edition_Waterfall%20Blue@2x.jpg"
+                        alt="HP Envy 13" width="100" /></a>
+                <h3>HP 14" Laptop Eco Edition</h3>
+                <p>13th Gen Intel Corei7 processor</p>
+                <p class="price">₱ 21,999</p>
+            </div>
+            <div class="card">
+                <a href="OMEN 16 2022 (INTEL).html"><img
+                        src="https://www.hp.com/content/dam/sites/worldwide/gaming/new-product-cards/OMEN_16_2022_Intel_Desktop@2x.png"
+                        alt="HP Pavilion 14" width="100" /></a>
+                <h3>OMEN 16 2022 (INTEL)</h3>
+                <p>Intel Corei9-12900H Processor9</p>
+                <p class="price">₱ 79,999</p>
+            </div>
+            <div class="card">
+                <a href="OMEN 16 2023.html"><img
+                        src="https://www.hp.com/content/dam/sites/worldwide/gaming/new-product-cards/NVIDIA_Desktop@2x.png"
+                        alt="HP Spectre 13" width="100" /></a>
+                <h3>OMEN 16 2023 (AMD/NVIDIA)</h3>
+                <p>AMD Ryzen 9 7940HS Processor</p>
+                <p class="price">₱ 81,999</p>
+            </div>
+            <div class="card">
+                <a href="HP Pavilion Aero.html"><img
+                        src="https://www.hp.com/content/dam/sites/worldwide/laptops-and-2-in-1s/pavilion/HP_PavilionAero13Laptop%E2%80%8B_NaturalSilver_desktop@2x.png"
+                        alt="HP Elite Dragonfly" width="100" /></a>
+                <h3>HP Pavilion Aero 13" Laptop</h3>
+                <p>AMD Ryzen™ 7 processor</p>
+                <p class="price">₱ 45,000</p>
+            </div>
+            <div class="card">
+                <a href="HP OmniBook.html"><img
+                        src="https://www.hp.com/content/dam/exclusive/omnibook-x-ai-pc-assets/Group_12322@2x.png"
+                        alt="HP 15s" width="100" /></a>
+                <h3>HP OmniBook X 14" Laptop AI PC</h3>
+                <p>Intel Core i7-13700H, 14-core processor</p>
+                <p class="price">₱ 45,999</p>
+            </div>
+
+        </div>
+        <button class="carousel-btn right" onclick="scrollCarousel(1)">›</button>
+    </section>
+
+    <!-- ===== Carousel Wrapper ===== -->
+      <h2>Asus</h2>
+    <section class="carousel-wrapper">
+        <button class="carousel-btn left" onclick="scrollCarousel(-1)">‹</button>
+        <div class="carousel" id="productCarousel">
+            <div class="card">
+                <a href="asus zenbook 14.html"><img src="https://dlcdnwebimgs.asus.com/gain/c08fbbb1-f8f7-4b42-a969-52dfe6957db9/w800"
+                        alt="HP Omen 15" width="300" /></a>
+                <h3>ASUS Zenbook 14 (UM3406)</h3>
+                <p> AMD Ryzen™ AI 300 Series Processor</p>
+                <p class="price">₱ 65,9950</p>
+            </div>
+            <div class="card">
+                <a href="asus vivobook s15.html"><img 
+                    src="https://dlcdnwebimgs.asus.com/gain/8442632c-11ac-4a3a-8c17-66999eeeef36/w800"
+                        alt="HP Envy 13" width="100" /></a>
+                <h3>ASUS Vivobook S15 (S5507);
+                    Copilot+ PC</h3>
+                <p> Snapdragon® X Elite Processor</p>
+                <p class="price">₱ 75,990</p>
+            </div>
+            <div class="card">
+                <a href="asus gaming x16.html"><img
+                        src="https://dlcdnwebimgs.asus.com/gain/dd08062b-93d2-432c-b2a4-e6b163501519/w185/fwebp"
+                        alt="ASUS Gaming X16 (K3605)" width="100" /></a>
+                <h3>ASUS Gaming X16 (K3605)</h3>
+                <p>13th Gen Intel® Core™ i9 H45 processor</p>
+                <p class="price">₱ 79,990</p>
+            </div>
+            <div class="card">
+                <a href="zenbook pro14.html"><img
+                        src="https://dlcdnwebimgs.asus.com/gain/5ddb629d-81c4-4b6c-a935-5d8049ff99c6/w185/fwebp"
+                        alt="HP Spectre 13" width="100" /></a>
+                <h3>Zenbook Pro 14 Duo OLED (UX8402)</h3>
+                <p>12th gen Intel® Core™ i9 processor</p>
+                <p class="price">₱ 81,990</p>
+            </div>
+            <div class="card">
+                <a href="Asus ExpertBook B5.html"><img
+                        src="https://dlcdnwebimgs.asus.com/gain/2f418a8c-efec-4508-b4e7-bde8c92fa2a9/w185/fwebp"
+                        alt="HP Elite Dragonfly" width="100" /></a>
+                <h3>ASUS ExpertBook B5 OLED</h3>
+                <p>12th gen Intel® Core™ i7 processor</p>
+                <p class="price">₱ 45,000</p>
+            </div>
+            <div class="card">
+                <a href="asus expertbook p5.html"><img
+                        src="https://dlcdnwebimgs.asus.com/gain/49e849c7-17f1-4697-989a-8ea34c4bfd4d/w185/fwebp"
+                        alt="HP 15s" width="100" /></a>
+                <h3>ASUS ExpertBook P5 (P5405)</h3>
+                <p>Intel® Core™ Ultra processors (Series 2) with up to 47 NPU TOPS</p>
+                <p class="price">₱ 45,990</p>
+            </div>
+
+        </div>
+        <button class="carousel-btn right" onclick="scrollCarousel(1)">›</button>
+    </section>
+
+     <!-- ===== Carousel Wrapper ===== -->
+       <h2>Lenovo</h2>
+    <section class="carousel-wrapper">
+        <button class="carousel-btn left" onclick="scrollCarousel(-1)">‹</button>
+        <div class="carousel" id="productCarousel">
+            <div class="card">
+                <a href="levono thinkpad p1.html"><img src="https://p4-ofp.static.pub//fes/cms/2024/09/11/8pnuxkm1rcxstvyqzg49ytc0y379vh510331.png"
+                        alt="HP Omen 15" width="300" /></a>
+                <h3>LENOVO ThinkPad P1 Gen 7 (16" Intel)</h3>
+                <p>Intel® Core™ Ultra 5 135H vPro® Processor</p>
+                <p class="price">₱ 134,999</p>
+            </div>
+            <div class="card">
+                <a href="levono legion pro71.html"><img 
+                    src="https://p2-ofp.static.pub//fes/cms/2025/02/14/oy7r3vdo1fee2bd6764lu0p7zdlqrs216573.png"
+                        alt="HP Envy 13" width="100" /></a>
+                <h3>LENOVO Legion Pro 7i (16", Gen 10)</h3>
+                <p>Intel® Core™ Ultra 9 275HX Processor</p>
+                <p class="price">₱ 135,999</p>
+            </div>
+            <div class="card">
+                <a href="lenovo yoga slim7.html"><img
+                        src="https://p2-ofp.static.pub//fes/cms/2025/03/06/sonu80fc3nxt9bazla5e5lv7b2voit215424.png"
+                        alt="ASUS Gaming X16 (K3605)" width="100" /></a>
+                <h3>LENOVO Yoga Slim 7 (14", Gen10)</h3>
+                <p>AMD Ryzen™ AI 5 340 Processor</p>
+                <p class="price">₱ 59,999</p>
+            </div>
+            <div class="card">
+                <a href="lenovo ideapad sil5.html"><img
+                        src="https://p2-ofp.static.pub//fes/cms/2024/09/18/itgh2jmfx53p0x9wph53dlnjvlzwpj941752.png"
+                        alt="HP Spectre 13" width="100" /></a>
+                <h3>LENOVO IdeaPad Slim 5 (15'', Gen 10)</h3>
+                <p>AMD Ryzen™ 5 7535HS Processor</p>
+                <p class="price">₱ 45,999</p>
+            </div>
+            <div class="card">
+                <a href="lenovo legion51.html"><img
+                        src="https://p1-ofp.static.pub//fes/cms/2023/11/01/fb41cs7ur75m3mnjclp6rn2ucqc94h672507.png"
+                        alt="HP Elite Dragonfly" width="100" /></a>
+                <h3>LENOVO Legion 5i (16", Gen 9)</h3>
+                <p>114th Generation Intel® Core™ i7-14650HX Processor</p>
+                <p class="price">₱ 110,999</p>
+            </div>
+            <div class="card">
+                <a href="lenovo. loq.html"><img
+                        src="https://p3-ofp.static.pub//fes/cms/2024/02/13/jk8n4yscxrxtllkjme7upw7qqvg55r832585.png"
+                        alt="HP 15s" width="100" /></a>
+                <h3>LENOVO LOQ 15IRX9</h3>
+                <p>13th Generation Intel® Core™ i5-13450HX Processor</p>
+                <p class="price">₱ 56,999</p>
+            </div>
+
+        </div>
+        <button class="carousel-btn right" onclick="scrollCarousel(1)">›</button>
+    </section>
+
+    <h2>Macbook</h2>
+  <section class="carousel-wrapper">
+    <button class="carousel-btn left" onclick="scrollCarousel(-1)">‹</button>
+    <div class="carousel" id="productCarousel">
+      <div class="card">
+        <a href="macbookairm3.html">
+          <div class="image-container2">
+            <img src="https://jjstore.ru/image/cache/catalog/macbookm2/mba15-midnight-select-202306-1181x865.jpg"
+              alt="MacBook Air M1" />
+        </a>
+      </div>
+      <h3>MacBook Air 13" 2024 M3</h3>
+      <p></p>
+      <p class="price">₱ 64,990</p>
+    </div>
+    <div class="card">
+      <a href="Macbook air 15.html">
+        <div class="image-container2">
+          <img src="https://jjstore.ru/image/cache/catalog/macbookm2/mba15-silver-select-202306-1181x865.jpg"
+            alt="iPhone 16 Pro" />
+      </a>
+    </div>
+    <h3>MacBook Air 15" 2024 M3</h3>
+    <p></p>
+    <p class="price">₱ 74,990</p>
+    </div>
+    <div class="card">
+      <a href="Macbook pro 14.html">
+        <div class="image-container2">
+          <img src="https://jjstore.ru/image/cache/catalog/apple/makbuk14/9xsp58p98ajk36yro7t327hk0lm79qb2-1181x865.jpg"
+            alt="MacBook M3" />
+      </a>
+    </div>
+    <h3>MacBook Pro 14" M3</h3>
+    <p>13.6-inch, M3 Chip 2024, 8-Core CPU, Starlight, 512GB</p>
+    <p class="price">₱ 89,990.00</p>
+    </div>
+
+
+      <div class="card">
+        <a href="iphone16promax.html">
+          <div class="image-container2">
+            <img
+              src="https://jjstore.ru/image/cache/catalog/macbookm2/mba15-midnight-select-202306-1181x865.jpg"
+              alt="MacBook Air M1" />
+        </a>
+      </div>
+      <h3>MacBook Air 13" 2025 M4</h3>
+      <p></p>
+      <p class="price">₱ 69,990</p>
+    </div>
+    <div class="card">
+      <a href="#">
+        <div class="image-container2">
+          <img
+            src="https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mba13-silver-select-202503?wid=904&hei=840&fmt=jpeg&qlt=90&.v=cCtGdk55eHp5QXJpcHVMMTl2dWZRYXRMSzFxakdDZHFiUkYyaDVGbE5SQnBXalhMVU5sWTJOK1MxYmlTTi9sTmdsbGZlRHV0Q3JlbHJxWXRlWjZpMmdvUkF5MUQ4Y0U3MGRPK3g4MlJsc3M"
+            alt="iPhone 16 Pro" />
+      </a>
+    </div>
+    <h3>MacBook Air 15" 2025 M4</h3>
+    <p></p>
+    <p class="price">₱ 79,990</p>
+    </div>
+
+    <div class="card">
+      <a href="#">
+        <div class="image-container2">
+          <img
+            src="https://jjstore.ru/image/cache/catalog/apple/makbuk14/9xsp58p98ajk36yro7t327hk0lm79qb2-1181x865.jpg"
+            alt="MacBook M3" />
+      </a>
+    </div>
+    <h3>MacBook Pro 15" 2025 M4</h3>
+    <p></p>
+    <p class="price">₱ 169,990</p>
+    </div>
+
+
+    <button class="carousel-btn right" onclick="scrollCarousel(1)">›</button>
+  </section>
+
+
+  <h2>Dell</h2>
+    <section class="carousel-wrapper">
+        <button class="carousel-btn left" onclick="scrollCarousel(-1)">‹</button>
+        <div class="carousel" id="productCarousel">
+            <div class="card">
+                <a href="Dell 16 Plus.html"><img
+                        src="https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/dell-plus/db16250/media-gallery/fpr/notebook-db16250nt-fpr-bl-gallery-1.psd?fmt=pjpg&pscan=auto&scl=1&hei=402&wid=516&qlt=100,1&resMode=sharp2&size=516,402&chrss=full"
+                        alt="HP Omen 15" width="300" /></a>
+                <h3>Dell 16 Plus Laptop</h3>
+                <p>Intel® Core™ Ultra7 processor 256V</p>
+                <p class="price">₱ 65,9950</p>
+            </div>
+            <div class="card">
+                <a href="dell pro 13 prem.html"><img
+                        src="https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/dell-pro-premium/pa13250/media-gallery/entry-panel-pl-bezel-wlan/laptop-dell-pro-pa13250nt-gy-entry-panel-pl-bezel-wlan-gallery-1.psd?fmt=pjpg&pscan=auto&scl=1&hei=402&wid=672&qlt=100,1&resMode=sharp2&size=672,402&chrss=full"
+                        alt="HP Envy 13" width="100" /></a>
+                <h3>Dell Pro 13 Premium Laptop</h3>
+                <p>Intel® Core™ Ultra 5 236V vPro® Enterprise</p>
+                <p class="price">₱ 75,990</p>
+            </div>
+            <div class="card">
+                <a href="Dell pro 14 prem.html"><img
+                        src="https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/dell-pro-premium/pa14250/media-gallery/notebook-14-pa14250-nt-gy-entry-panel-plastic-bezel-wlan-gallery-1.psd?fmt=pjpg&pscan=auto&scl=1&hei=402&wid=582&qlt=100,1&resMode=sharp2&size=582,402&chrss=full"
+                        alt="ASUS Gaming X16 (K3605)" width="100" /></a>
+                <h3>Dell Pro 14 Premium Laptop</h3>
+                <p>Intel® Core™ Ultra 5 236V vPro® Enterprise</p>
+                <p class="price">₱ 79,990</p>
+            </div>
+            <div class="card">
+                <a href="Dell Gaming laptop.html"><img
+                        src="https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/alienware-notebooks/alienware-m16-r2-intel/media-gallery/laptop-aw-m16r2-nt-bk-gallery-3.psd?fmt=pjpg&pscan=auto&scl=1&hei=402&wid=510&qlt=100,1&resMode=sharp2&size=510,402&chrss=full"
+                        alt="HP Spectre 13" width="100" /></a>
+                <h3>Dell Alienware m16 R2 Gaming Laptop</h3>
+                <p>Intel® Core™ Ultra 7 processor 155H</p>
+                <p class="price">₱ 81,990</p>
+            </div>
+            <div class="card">
+                <a href="Dell latitude 5455.html"><img
+                        src="https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/latitude-notebooks/5455/media-gallery/notebook-latitude-14-5455-gray-gallery-2.psd?fmt=pjpg&pscan=auto&scl=1&hei=402&wid=490&qlt=100,1&resMode=sharp2&size=490,402&chrss=full"
+                        alt="HP Elite Dragonfly" width="100" /></a>
+                <h3>Dell Latitude 5455 Laptop</h3>
+                <p>Qualcomm® Snapdragon® X Plus X1P-64-100</p>
+                <p class="price">₱ 45,000</p>
+            </div>
+            <div class="card">
+                <a href="dell XPS 16.html"><img
+                        src="https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/xps-notebooks/16-9640/media-gallery/silver/touch/notebook-laptop-xps-16-9640-t-silver-gallery-2.psd?fmt=pjpg&pscan=auto&scl=1&hei=402&wid=612&qlt=100,1&resMode=sharp2&size=612,402&chrss=full"
+                        alt="HP 15s" width="100" /></a>
+                <h3>Dell XPS 16 Laptop</h3>
+                <p>Intel® Core™ Ultra 7 Processor 155H</p>
+                <p class="price">₱ 114,990</p>
+            </div>
+
+        </div>
+        <button class="carousel-btn right" onclick="scrollCarousel(1)">›</button>
+    </section>
+
+
+    <!-- ===== Footer Section ===== -->
+    <footer>
+        <div class="footer-left">
+            <div><strong>Connect with us</strong></div>
+            <div class="social-icons">
+                <a href="#"><img src="images/fb icon.png" width="20"></a>
+                <a href="#"><img src="images/instagram icon.png" width="20"></a>
+                <a href="#"><img src="images/gmail icon.png" width="20"></a>
+                <a href="#"><img src="images/x icon.png" width="20"></a>
+                <i class="fa-brands fa-square-instagram" style="color: #ffffff;"></i>
+            </div>
+            <p><strong>Customer Support</strong></p>
+            <p>Email:support@techhaven.com<br>Phone: +1 (800) 123-4567<br>Hours: Monday–Friday, 9 AM–6 PM</p>
+        </div>
+        <div class="footer-right">
+            <a href="feedback.html" style="color: white; text-decoration: none;">Feedback</a>
+            <a href="faq.html" style="color: white; text-decoration: none;">FAQ's</a>
+            <a href="terms.html" style="color: white; text-decoration: none;">Terms of Service</a>
+            <a href="privacy.html" style="color: white; text-decoration: none;">Privacy Policy</a>
+        </div>
+        <div class="footer-bottom">
+            Copyright © 2025 TECHHAVEN. All rights reserved.
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get all necessary elements
+            const searchIcon = document.getElementById('searchIcon');
+            const searchContainer = document.getElementById('searchContainer');
+            const closeSearch = document.getElementById('closeSearch');
+            const searchInput = document.getElementById('searchInput');
+            const searchQuickLinks = document.getElementById('searchQuickLinks');
+            const statusMessage = document.getElementById('statusMessage');
+
+            // Function to display status message
+            function showStatusMessage(message) {
+                statusMessage.textContent = message;
+                statusMessage.classList.add('active');
+
+                // Hide status message after 3 seconds
+                setTimeout(function () {
+                    statusMessage.classList.remove('active');
+                }, 3000);
+            }
+
+            // Show search container when search icon is clicked
+            searchIcon.addEventListener('click', function (e) {
+                e.preventDefault();
+                searchContainer.style.display = 'flex';
+                setTimeout(() => {
+                    searchContainer.classList.add('active');
+                }, 10);
+                searchQuickLinks.classList.add('active');
+                searchInput.focus();
+                showStatusMessage("Search activated");
+            });
+
+            // Hide search container when close icon is clicked
+            closeSearch.addEventListener('click', function () {
+                searchContainer.classList.remove('active');
+                searchQuickLinks.classList.remove('active');
+                searchInput.value = '';
+                setTimeout(() => {
+                    searchContainer.style.display = 'none';
+                }, 300);
+                showStatusMessage("Search closed");
+            });
+
+            // Handle search submission
+            searchInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (searchInput.value.trim() !== '') {
+                        showStatusMessage(`Searching for: "${searchInput.value}"`);
+                        setTimeout(function () {
+                            searchInput.value = '';
+                            searchContainer.classList.remove('active');
+                            searchQuickLinks.classList.remove('active');
+                            setTimeout(() => {
+                                searchContainer.style.display = 'none';
+                            }, 300);
+                        }, 1000);
+                    }
+                }
+            });
+
+            // Prevent clicks inside search container from closing it
+            searchContainer.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+            searchQuickLinks.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+        });
+
+        // Add this inside your <script> tag, after the DOMContentLoaded event starts
+
+        // Responsive menu functionality
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        // Toggle menu open/close
+        menuToggle.addEventListener('click', function () {
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+        });
+
+        // Hide menu when overlay is clicked (for mobile)
+        menuOverlay.addEventListener('click', function () {
+            menuToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+        });
+
+        // Optional: Hide menu when a nav link is clicked (for single-page feel)
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function () {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            });
+        });
+
+        // Add this at the end of your <script> tag
+        document.addEventListener('DOMContentLoaded', function () {
+            // Hero slider logic
+            const heroSlides = document.querySelectorAll('.hero-slide');
+            const heroPrev = document.getElementById('heroPrev');
+            const heroNext = document.getElementById('heroNext');
+            const heroDotsContainer = document.getElementById('heroSliderDots');
+            let heroCurrent = 0;
+            let heroSliderTimer = null;
+
+            // Set background images from img attribute
+            heroSlides.forEach(slide => {
+                const img = slide.getAttribute('img');
+                if (img) slide.style.backgroundImage = `url('${img}')`;
+            });
+
+            // Create dots
+            heroSlides.forEach((_, idx) => {
+                const dot = document.createElement('span');
+                dot.className = 'hero-slider-dot' + (idx === 0 ? ' active' : '');
+                dot.addEventListener('click', () => {
+                    showHeroSlide(idx);
+                    startHeroSliderTimer();
+                });
+                heroDotsContainer.appendChild(dot);
+            });
+            const heroDots = heroDotsContainer.querySelectorAll('.hero-slider-dot');
+
+            function showHeroSlide(idx) {
+                heroSlides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === idx);
+                    heroDots[i].classList.toggle('active', i === idx);
+                });
+                heroCurrent = idx;
+            }
+
+            function nextHeroSlide() {
+                let next = (heroCurrent + 1) % heroSlides.length;
+                showHeroSlide(next);
+            }
+
+            function prevHeroSlide() {
+                let prev = (heroCurrent - 1 + heroSlides.length) % heroSlides.length;
+                showHeroSlide(prev);
+            }
+
+            function startHeroSliderTimer() {
+                if (heroSliderTimer) clearInterval(heroSliderTimer);
+                heroSliderTimer = setInterval(nextHeroSlide, 5000);
+            }
+
+            heroNext.addEventListener('click', () => {
+                nextHeroSlide();
+                startHeroSliderTimer();
+            });
+            heroPrev.addEventListener('click', () => {
+                prevHeroSlide();
+                startHeroSliderTimer();
+            });
+
+            showHeroSlide(0);
+            startHeroSliderTimer();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TechHaven</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: #1f487e;
+            color: #fff;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            width: 250px;
+        }
+
+        .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 580px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 20px 50px 20px 35px;
+            border: none;
+            outline: none;
+            border-radius: 25px;
+            font-size: 16px;
+            background: #6290c8;
+            color: #fff;
+        }
+
+        .search-input:hover {
+            background: #fff;
+            color: #888;
+            transition: 0.3s;
+        }
+
+        .search-input::placeholder {
+            color: #fff;
+            opacity: 1;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            font-size: .9rem;
+        }
+
+        .nav-icons a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        nav {
+            background: #fff;
+            padding: .75rem 1rem;
+            display: flex;
+            gap: 1.5rem;
+            font-weight: bold;
+            border-bottom: 1px solid #ddd;
+        }
+
+        nav a {
+            color: #000;
+            font-weight: lighter;
+            text-decoration: none;
+        }
+
+        nav a.active {
+            border-bottom: 2px solid #1f487e;
+        }
+
+        /* ===== Main Content ===== */
+        .option-btn {
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        /* smaller color buttons */
+        .color-btn {
+            padding: .3rem .6rem;
+            font-size: .8rem;
+        }
+
+        /* smaller storage buttons */
+        .storage-btn {
+            padding: .3rem .6rem;
+            font-size: .8rem;
+        }
+
+        .option-btn.selected {
+            background: #1f487e;
+            color: #fff;
+            border: none;
+        }
+
+        .qty-btn {
+            background: #ddd;
+            border: none;
+            padding: .4rem .8rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: .75rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            background: #4d6ea7;
+            color: #fff;
+        }
+
+        .action-btn.primary {
+            background: #1f487e;
+        }
+
+        .action-btn:hover,
+        .option-btn:hover,
+        .qty-btn:hover {
+            opacity: .9;
+        }
+
+       /* ==== Reviews & Gallery ==== */
+        .reviews-section {
+            margin-top: 2rem;
+        }
+
+        .reviews-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .reviews-container {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .avg-score {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .avg-score .score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #333;
+            line-height: 1;
+        }
+
+        .avg-score .out-of {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .avg-score .stars {
+            color: gold;
+            font-size: 1.25rem;
+            line-height: 1;
+        }
+
+        .avg-score .count {
+            font-size: 0.9rem;
+            color: #777;
+            margin-top: 0.25rem;
+        }
+
+        .rating-bars {
+            flex: 2;
+            min-width: 200px;
+        }
+
+        .rating-bars .bar-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.4rem;
+        }
+
+        .rating-bars .bar-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .rating-bars .label {
+            width: 10px;
+            font-size: 10px;
+            color: #555;
+
+        }
+
+        .rating-bars .bar {
+            flex: 1;
+            height: 8px;
+            margin-left: 0.5rem;
+            border-radius: 4px;
+            flex: none;
+            /* disable flex-grow/flex-shrink */
+            width: 250px;
+            /* set your desired width */
+        }
+
+        .rating-bars .bar-5 {
+            background: #1f487e;
+        }
+
+        .rating-bars .bar-4 {
+            background: #4d6ea7;
+        }
+
+        .rating-bars .bar-3 {
+            background: #7b99c0;
+        }
+
+        .rating-bars .bar-2 {
+            background: #a9b8df;
+        }
+
+        .rating-bars .bar-1 {
+            background: #d7d9eb;
+        }
+
+        .write-review-wrap {
+            flex-basis: 100%;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .write-review-btn {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid #1f487e;
+            border-radius: 20px;
+            background: white;
+            color: #1f487e;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .write-review-btn:hover {
+            background: #1f487e;
+            color: white;
+        }
+
+        .buyers-gallery-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 2rem 0 1rem;
+        }
+
+        .buyers-gallery {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .buyers-gallery img {
+            width: 100px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .button {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background-color: #92a9bd;
+            color: #fff;
+            border-radius: 24px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .write-review-wrap {
+            flex-basis: 100%;
+            text-align: center;
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /*  BUYER REVIEW   */
+        .modal-content {
+            background: linear-gradient(135deg, #f5f8ff 60%, #e3eafc 100%);
+            padding: 32px 24px 24px 24px;
+            width: 95%;
+            max-width: 370px;
+            border-radius: 22px;
+            box-shadow: 0 8px 32px rgba(31, 72, 126, 0.18), 0 1.5px 8px rgba(31, 72, 126, 0.10);
+            text-align: center;
+            position: relative;
+            border: 1.5px solid #dbeafe;
+            animation: modalPop .25s cubic-bezier(.23, 1.01, .32, 1) both;
+        }
+
+        @keyframes modalPop {
+            0% {
+                transform: scale(0.85);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-content h2 {
+            color: #1f487e;
+            font-size: 1.35rem;
+            margin-bottom: 1.2rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .modal-content input,
+        .modal-content textarea {
+            width: 100%;
+            padding: 12px 14px;
+            margin-bottom: 14px;
+            border-radius: 12px;
+            border: 1.5px solid #b6c6e3;
+            font-size: 1rem;
+            background: #fafdff;
+            transition: border 0.2s;
+            outline: none;
+            color: #1f487e;
+            box-shadow: 0 1px 2px rgba(31, 72, 126, 0.03);
+        }
+
+        .modal-content input:focus,
+        .modal-content textarea:focus {
+            border: 1.5px solid #1f487e;
+            background: #f0f6ff;
+        }
+
+        .modal-content input[type="file"] {
+            padding: 8px 0;
+            border: none;
+            background: none;
+            margin-bottom: 18px;
+        }
+
+        .modal-content button.submit-btn {
+            background: linear-gradient(90deg, #1f487e 60%, #4d6ea7 100%);
+            color: #fff;
+            border: none;
+            border-radius: 18px;
+            padding: 12px 0;
+            width: 100%;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 8px;
+            box-shadow: 0 2px 8px rgba(31, 72, 126, 0.08);
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        .modal-content button.submit-btn:hover {
+            background: linear-gradient(90deg, #4d6ea7 60%, #1f487e 100%);
+            transform: translateY(-2px) scale(1.03);
+        }
+
+        .modal-content .close-btn {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: #e3eafc;
+            color: #1f487e;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            box-shadow: 0 1px 4px rgba(31, 72, 126, 0.08);
+            transition: background 0.2s, color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content .close-btn:hover {
+            background: #1f487e;
+            color: #fff;
+        }
+
+        @media (max-width: 480px) {
+            .modal-content {
+                padding: 18px 6px 16px 6px;
+                max-width: 98vw;
+            }
+
+            .modal-content h2 {
+                font-size: 1.05rem;
+            }
+
+            .modal-content input,
+            .modal-content textarea {
+                font-size: 0.95rem;
+                padding: 10px 8px;
+            }
+
+            .modal-content button.submit-btn {
+                font-size: 0.95rem;
+                padding: 10px 0;
+            }
+        }
+
+        /* ...existing code... */
+
+        /* ===== Footer ===== */
+        footer a:hover {
+
+            text-decoration: underline;
+
+        }
+
+        footer {
+            background-image: url(images/footer.jpg);
+            color: white;
+            padding: 1rem 1.5rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            font-size: 1rem;
+        }
+
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            max-width: 300px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-right a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-bottom {
+            width: 100%;
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.75rem;
+        }
+
+        p {
+            font-size: 15px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #1f487e;
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .logo {
+                margin-bottom: 1rem;
+            }
+
+            .search-container {
+                width: 100%;
+                max-width: 400px;
+            }
+
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav a {
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        @media (max-width:768px) {
+            header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            nav {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            main {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .option-btn {
+                width: 100%;
+            }
+
+            .qty-btn {
+                width: 100%;
+            }
+
+            .action-btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .buyers-gallery img {
+                width: 80px;
+                height: 60px;
+            }
+
+            .reviews-header,
+            .buyers-gallery-header {
+                font-size: 1.25rem;
+            }
+
+            .avg-score .score {
+                font-size: 2.5rem;
+            }
+
+            .avg-score .out-of {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 300px) {
+            .buyers-gallery img {
+                width: 70px;
+                height: 50px;
+            }
+
+            .avg-score .score {
+                font-size: 2rem;
+            }
+
+            .avg-score .out-of {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Return Link */
+
+        .return-link {
+            text-decoration: none;
+            padding: 8px 16px;
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .return-link a {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <a href="index.html">
+                <img src="images/techaven logo (100 x 50 px).jpg" width="150" alt="TechHaven">
+            </a>
+        </div>
+        <div class="search-container">
+            <input class="search-input" placeholder="Search">
+            <img class="search-icon" src="images/search icon.png" alt="Search">
+        </div>
+        <div class="nav-icons">
+            <a href="signin page.html"><img src="images/account icon.png" width="30">
+                <figcaption>Login</figcaption>
+            </a>
+            <a href="#cart"><img src="images/basket icon.png" width="30">
+                <figcaption>Cart</figcaption>
+            </a>
+        </div>
+    </header>
+
+    <nav>
+        <a href="#">HOME</a>
+        <a href="shop.html">SHOP</a>
+        <a href="about (1).html">ABOUT US</a>
+    </nav>
+
+    <div class="return-link">
+        <a href="Electronics.html" class="return-link">&#8617; Back</a>
+    </div>
+
+    <main style="padding:2rem; display:flex; justify-content:center; gap:2rem;">
+        <!-- Left (static) -->
+        <div style="flex:1; min-width:300px; background:#f5f8ff; padding:1rem; border-radius:10px;">
+            <img id="product-image"
+                src="images/electronics img/Galaxy Watch6 Classic Bluetooth.png"
+                alt="Asus Zenbook 14" style="width:100%; border-radius:10px;">
+            
+            
+            <!-- storage -->
+            <div style="margin-top:1rem;">
+                <p><strong>Select Case Size</strong></p>
+                <div style="display:flex; gap:.5rem; flex-wrap:wrap;">
+                    <button class="option-btn storage-btn" data-price="28990">46mm</button>
+                    <button class="option-btn storage-btn" data-price="26990">44mm</button>
+                    <button class="option-btn storage-btn selected" data-price="24990">40mm</button>
+
+                </div>
+            </div>
+            <!-- price & qty -->
+            <div style="margin-top:1rem;">
+                <p id="product-price" style="font-size:1.5rem; font-weight:bold; color:#1f487e;">
+                    ₱ 24,990
+                </p>
+            </div>
+            <div style="margin-top:1rem; display:flex; align-items:center; gap:1rem;">
+                <strong>Quantity</strong>
+                <button onclick="changeQuantity(-1)" class="qty-btn">−</button>
+                <span id="qty-value">1</span>
+                <button onclick="changeQuantity(1)" class="qty-btn">+</button>
+            </div>
+            <!-- actions -->
+            <div style="margin-top:1.5rem; display:flex; gap:1rem;">
+                <button id="add-to-cart-btn" class="action-btn">Add to Cart</button>
+                <button class="action-btn primary">Buy Now</button>
+            </div>
+        </div>
+
+        <!-- Right (scrollable) -->
+        <div style="flex:1; min-width:300px; height:600px; overflow-y:auto; padding-right:.5rem;">
+            <h2 style="font-size:2rem; font-weight:bold; color:#1f487e;">GALAXY Watch 6 Classic Bluetooth</h2>
+            <p style="margin-bottom:1rem;">1.5" Super AMOLED, Exynos W930, Heart Rate Monitoring, 40mm</p>
+            <h3 style="margin-bottom:1rem; font-weight:bold;">Product Features</h3>
+            <ul style="list-style:none; line-height:1.8; padding-left:0;">
+                <li>💻 1.5" Super AMOLED Display with 320x360 resolution</li>
+        <li>⚙️ Exynos W930, Dual-core processor</li>
+        <li>📶 Bluetooth 5.2 for seamless connectivity</li>
+        <li>❤️ Heart Rate Monitoring, Sleep Tracking, ECG</li>
+        <li>🔋 40mm model with 2-day battery life</li>
+        <li>💧 IP68 water and dust resistance</li>
+        <li>🎤 Built-in speaker and microphone for calls</li>
+            </ul>
+
+           <section class="reviews-section">
+
+                <h3 class="reviews-header">Reviews</h3><br>
+
+                <div class="reviews-container">
+
+                    <!-- Average Score -->
+                    <div class="avg-score">
+                        <p class="score">5.0</p>
+                        <p class="out-of">/5</p>
+                        <div class="stars">★★★★★</div>
+                        <p class="count">1 Review</p>
+                    </div>
+
+                    <!-- Rating Bars -->
+                    <div class="rating-bars">
+                        <div class="bar-row">
+                            <span class="label">5 Stars</span>
+                            <div class="bar bar-5"></div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="label">4 Stars</span>
+                            <div class="bar bar-4"></div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="label">3 Stars</span>
+                            <div class="bar bar-3"></div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="label">2 Stars</span>
+                            <div class="bar bar-2"></div>
+                        </div>
+                        <div class="bar-row">
+                            <span class="label">1 Stars</span>
+                            <div class="bar bar-1"></div>
+                        </div>
+                    </div>
+
+                    <!-- Write a Review Button -->
+                    <div class="write-review-wrap">
+                        <button class="button" onclick="openModal()">Write a Review</button>
+                    </div>
+
+
+                    <div class="modal" id="reviewModal">
+                        <div class="modal-content">
+                            <button class="close-btn" onclick="closeModal()">&times;</button>
+                            <h2>Write a Review</h2><br>
+                            <input type="text" id="reviewerName" placeholder="Your Name">
+                            <textarea id="reviewText" placeholder="Write your review..." rows="4"></textarea>
+                            <input type="file" id="reviewImage" accept="image/*,video/*" />
+                            <button class="submit-btn" onclick="submitReview()">Submit Review</button>
+                        </div>
+                    </div>
+
+                    <script>
+                        function openModal() {
+                            document.getElementById("reviewModal").classList.add("active");
+                        }
+
+                        function closeModal() {
+                            document.getElementById("reviewModal").classList.remove("active");
+                        }
+                    </script>
+
+
+
+
+                </div>
+
+                <!-- Buyers Gallery -->
+                <h3 class="buyers-gallery-header">Buyers Gallery</h3>
+                <div class="buyers-gallery" id="buyersGallery">
+
+                    <!-- Reviews will be appended here -->
+                </div>
+
+                <script>
+                    function submitReview() {
+                        const name = document.getElementById('reviewerName').value.trim();
+                        const text = document.getElementById('reviewText').value.trim();
+                        const imageInput = document.getElementById('reviewImage');
+                        let imageData = "";
+
+                        // Read image as base64 if provided
+                        if (imageInput.files && imageInput.files[0]) {
+                            const reader = new FileReader();
+                            reader.onload = function (e) {
+                                imageData = e.target.result;
+                                saveAndDisplayReview(name, text, imageData);
+                            };
+                            reader.readAsDataURL(imageInput.files[0]);
+                        } else {
+                            saveAndDisplayReview(name, text, "");
+                        }
+                        closeModal();
+                    }
+
+                    function saveAndDisplayReview(name, text, imageData) {
+                        if (!name && !text && !imageData) return;
+                        const review = { name, text, imageData };
+                        // Save to localStorage
+                        const reviews = JSON.parse(localStorage.getItem('buyersGalleryReviews') || '[]');
+                        reviews.push(review);
+                        localStorage.setItem('buyersGalleryReviews', JSON.stringify(reviews));
+                        // Update gallery
+                        appendReviewToGallery(review);
+                    }
+
+                    function appendReviewToGallery(review) {
+                        const gallery = document.getElementById('buyersGallery');
+                        const wrapper = document.createElement('div');
+                        wrapper.style.display = "inline-block";
+                        wrapper.style.margin = "0 8px";
+                        if (review.imageData) {
+                            const img = document.createElement('img');
+                            img.src = review.imageData;
+                            img.alt = review.name || "Buyer image";
+                            img.width = 100;
+                            img.height = 80;
+                            img.style.objectFit = "cover";
+                            img.style.borderRadius = "5px";
+                            wrapper.appendChild(img);
+                        }
+                        if (review.name || review.text) {
+                            const cap = document.createElement('div');
+                            cap.style.fontSize = "0.7rem";
+                            cap.style.color = "#333";
+                            cap.style.maxWidth = "100px";
+                            cap.style.wordBreak = "break-word";
+                            cap.innerText = (review.name ? review.name + ": " : "") + review.text;
+                            wrapper.appendChild(cap);
+                        }
+                        gallery.appendChild(wrapper);
+                    }
+
+                    // Load reviews on page load
+                    window.addEventListener('DOMContentLoaded', () => {
+                        const reviews = JSON.parse(localStorage.getItem('buyersGalleryReviews') || '[]');
+                        reviews.forEach(appendReviewToGallery);
+                    });
+                </script>
+            </section>
+        </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-left">
+            <strong>Connect with us</strong>
+            <div class="social-icons">
+                <a href="#"><img src="images/fb icon.png" width="20"></a>
+                <a href="#"><img src="images/instagram icon.png" width="20"></a>
+                <a href="#"><img src="images/gmail icon.png" width="20"></a>
+                <a href="#"><img src="images/x icon.png" width="20"></a>
+            </div>
+            <p><strong>Customer Support</strong><br>
+                Email: support@techhaven.com<br>
+                Phone: +1 (800) 123-4567<br>
+                Mon–Fri, 9 AM–6 PM</p>
+        </div>
+        <div class="footer-right">
+            <a href="feedback.html">Feedback</a>
+            <a href="faq.html">FAQ's</a>
+            <a href="terms.html">Terms of Service</a>
+            <a href="privacy.html">Privacy Policy</a>
+        </div>
+        <div class="footer-bottom">
+            © 2025 TECHHAVEN. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        let basePrice = 24990;  // initial 256GB price
+        let qty = 1;
+
+        function updateDisplayedPrice() {
+            const total = basePrice * qty;
+            document.getElementById('product-price')
+                .textContent = `₱ ${total.toLocaleString()}`;
+        }
+
+        function changeQuantity(delta) {
+            qty = Math.max(1, qty + delta);
+            document.getElementById('qty-value').textContent = qty;
+            updateDisplayedPrice();
+        }
+
+        // storage selection => update basePrice & refresh
+        document.querySelectorAll('.storage-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.storage-btn')
+                    .forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                basePrice = parseInt(btn.getAttribute('data-price'), 10);
+                updateDisplayedPrice();
+            });
+        });
+    </script>
+        
+    <script>
+        document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+            // Gather product info
+            const name = 'GALAXY Watch6 Classic Bluetooth';
+            const img = document.getElementById('product-image').src;
+            const color = document.querySelector('.color-btn.selected').textContent;
+            const storage = document.querySelector('.storage-btn.selected').textContent;
+            const priceText = document.getElementById('product-price').textContent.replace(/[₱,\s]/g, '');
+            const unitPrice = parseInt(priceText, 10) / parseInt(document.getElementById('qty-value').textContent, 10);
+            const qty = parseInt(document.getElementById('qty-value').textContent, 10);
+
+            const item = { name, img, color, storage, unitPrice, qty };
+
+            // Read existing cart or start fresh
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            cart.push(item);
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            // Go to cart page
+            window.location.href = 'cart.html';
+        });
+    </script>
+
+    <script>
+        document.querySelector('.action-btn.primary').addEventListener('click', function () {
+            // Gather product info
+            const name = 'GALAXY Watch6 Classic Bluetooth';
+            const img = document.getElementById('product-image').src;
+            const color = document.querySelector('.color-btn.selected').textContent;
+            const storage = document.querySelector('.storage-btn.selected').textContent;
+            const priceText = document.getElementById('product-price').textContent.replace(/[₱,\s]/g, '');
+            const unitPrice = parseInt(priceText, 10) / parseInt(document.getElementById('qty-value').textContent, 10);
+            const qty = parseInt(document.getElementById('qty-value').textContent, 10);
+
+            const item = { name, img, color, storage, unitPrice, qty };
+
+            // Save as checkoutItems (single item array) and total price
+            localStorage.setItem('checkoutItems', JSON.stringify([item]));
+            localStorage.setItem('checkoutTotal', (unitPrice * qty));
+
+            // Redirect to checkout page
+            window.location.href = 'checkout.html';
+        });
+    </script>
+
+</body>
+
+</html>

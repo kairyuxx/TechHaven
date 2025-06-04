@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TechHaven - Terms of Service</title>
+    <style>
+        /* ===== Global Styles ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+        }
+
+         /* Header Styles */
+        header {
+            width: 100vw;
+            min-width: 100vw;
+            left: 0;
+            right: 0;
+            margin: 0;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: black;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo img {
+            display: block;
+            max-width: 130px;
+            max-height: 30px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-menu li {
+            margin-left: 25px;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+
+        .nav-icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-icons img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .nav-icons div {
+            margin-left: 15px;
+            cursor: pointer;
+        }
+
+        /* Mobile menu button */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 24px;
+            height: 18px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 150;
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+
+        /* Apple-style Search Container */
+        .search-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+            z-index: 200;
+        }
+
+        .search-container.active {
+            display: flex;
+            transform: translateY(0);
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            width: 60%;
+            max-width: 600px;
+            padding: 0 15px;
+            border-radius: 8px 8px 0 0;
+            background-color: #ffffff;
+            margin-top: 40px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10), 0 1.5px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        .search-icon {
+            color: #6e6e73;
+            margin-right: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .close-icon {
+            color: #6e6e73;
+            cursor: pointer;
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="search"] {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #333;
+            font-size: 14px;
+            width: 100%;
+            padding: 10px 0;
+        }
+
+
+        .nav-icons a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* ===== Terms Content ===== */
+        .terms-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .terms-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .terms-header h1 {
+            color: black;
+            margin-bottom: 0.5rem;
+        }
+
+        .terms-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .terms-card {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .last-updated {
+            text-align: right;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .terms-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .terms-section h2 {
+            color: black;
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        .terms-list {
+            list-style-type: none;
+            counter-reset: term-counter;
+            padding-left: 0;
+        }
+
+        .terms-list li {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 2.5rem;
+            counter-increment: term-counter;
+        }
+
+        .terms-list li::before {
+            content: counter(term-counter) ".";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            color: black;
+            font-size: 1.1rem;
+        }
+
+        .term-title {
+            font-weight: bold;
+            color: black;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .term-content {
+            color: #444;
+            margin-left: 0;
+        }
+
+        .contact-info {
+            background-color: #f5f8fa;
+            border-left: 4px solid black;
+            padding: 1.5rem;
+            margin-top: 3rem;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .contact-info h2 {
+            color: black;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .contact-info a {
+            color: black;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+       /* ===== Footer ===== */
+        footer {
+            background-image: url(images/footer.jpg);
+            color: white;
+            padding: 1rem 1.5rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            font-size: 13px;
+        }
+
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            max-width: 300px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-right a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-bottom {
+            width: 100%;
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 13px;
+        }
+
+        p {
+            font-size: 13px;
+        }
+
+
+        /* ===== Responsive Styles ===== */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-container {
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            .terms-container {
+                padding: 0 1rem;
+            }
+
+            .footer-right {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-top: 1rem;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+
+            .product-grid,
+            .category-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+
+            .hero-content {
+                max-width: 400px;
+            }
+
+            .hero h1 {
+                font-size: 16px;
+
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 48px;
+                left: -100%;
+                width: 70%;
+                max-width: 300px;
+                height: calc(100vh - 50px);
+                background: linear-gradient(135deg,
+                        rgba(0, 0, 0, 0.95),
+                        rgba(146, 172, 202, 0.4));
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px;
+                transition: left 0.3s ease;
+                z-index: 90;
+                box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-menu li {
+                margin: 15px 0;
+                width: 100%;
+            }
+
+            .logo {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 120;
+            }
+
+            .nav-menu a {
+                font-size: 16px;
+                display: block;
+                width: 100%;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .menu-toggle.active span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .hero-content {
+                max-width: 100%;
+                margin: 0 20px;
+                text-align: center;
+            }
+
+            .hero {
+                height: 50vh;
+            }
+
+            .product-grid,
+            .category-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 20px;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                padding: 0 20px;
+            }
+
+            .newsletter-form input {
+                border-radius: 5px;
+                margin-bottom: 10px;
+                width: 100%;
+            }
+
+            .newsletter-form button {
+                border-radius: 5px;
+                padding: 12px;
+                width: 100%;
+            }
+
+            .search-box,
+            .search-quick-links {
+                width: 90%;
+                max-width: none;
+            }
+
+            .footer-column {
+                flex: 0 0 50%;
+                margin-bottom: 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                min-height: 300px;
+                height: 40vh;
+            }
+
+            .hero h1 {
+                font-size: 10px;
+                margin-bottom: 10px;
+            }
+
+            .hero p {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+
+            .btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
+            }
+
+            .product-img {
+                height: 150px;
+            }
+
+            .product-title {
+                font-size: 14px;
+            }
+
+            .product-price {
+                font-size: 16px;
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+
+            .category-card {
+                height: 120px;
+            }
+
+            .category-overlay {
+                font-size: 16px;
+            }
+
+            .footer-column {
+                flex: 0 0 100%;
+            }
+        }
+
+        /* Place this in your <style> section or update your responsive CSS */
+
+        @media (max-width: 768px) {
+            .nav-icons {
+                position: static;
+                margin: 20px 0 0 0;
+                gap: 1rem;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                width: 100%;
+            }
+
+            .navbar {
+                flex-wrap: wrap;
+            }
+
+            /* Move nav-icons inside nav-menu when menu is open */
+            .nav-menu {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-menu .nav-icons {
+                display: flex;
+            }
+
+            /* Hide nav-icons in header (outside menu) on mobile */
+            .navbar>.nav-icons {
+                display: none;
+            }
+        }
+
+        /* Show nav-icons in header on desktop */
+        @media (min-width: 769px) {
+            .navbar>.nav-icons {
+                display: flex;
+            }
+
+            .nav-menu .nav-icons {
+                display: none !important;
+            }
+        }
+
+        .nav-icons img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .nav-icons div {
+            margin-left: 15px;
+            cursor: pointer;
+        }
+
+        /* ===== Main Content ===== */
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .main-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+        }
+
+        .main-content img:hover {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+
+        .main-left {
+            flex: 2;
+            min-width: 300px;
+        }
+
+        .main-right {
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+
+            color: black;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: lighter;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 180px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            z-index: 1;
+            margin-top: 5px;
+            margin-left: 20px;
+
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-weight: 500;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <body>
+        <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="navbar">
+                <button class="menu-toggle" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu" id="navMenu">
+                    <div class="nav-icons">
+                        <div class="search-icon" id="searchIcon"><img src="images/search icon.png"></div>
+                        <div class="login-icon"><a href="#"><img src="images/account icon.png"></a></div>
+                        <div class="cart-icon"><a href="cart.html"><img src="images/basket icon.png" alt="Cart"></a>
+                        </div>
+                    </div>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                </ul>
+                <a href="index.html" class="logo"><img src="images/logo.png" width="100px"></a>
+                <div class="nav-icons">
+                    <div class="search-icon" id="searchIcon"><a><img src="images/search icon.png"><a></a></div>
+                    <div class="login-icon"><a href="login.html"><img src="images/account icon.png"></a></div>
+                    <div class="cart-icon"><a href="cart.html"><img src="images/basket icon.png" alt="Cart"></a></div>
+                </div>
+
+                <!-- Apple-style Search Container -->
+                <div class="search-container" id="searchContainer">
+                    <div class="search-box">
+                        <div class="search-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#666"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                            </svg>
+                        </div>
+                        <input type="search" placeholder="Search TechHaven..." id="searchInput">
+                        <div class="close-icon" id="closeSearch">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#666"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="search-quick-links" id="searchQuickLinks">
+                        <h3>Quick Links</h3>
+                        <a href="#" class="quick-link">
+                            <div class="arrow-icon">→</div>
+                            <span>Smartphones</span>
+                        </a>
+                        <a href="#" class="quick-link">
+                            <div class="arrow-icon">→</div>
+                            <span>Laptops</span>
+                        </a>
+                        <a href="#" class="quick-link">
+                            <div class="arrow-icon">→</div>
+                            <span>Appliances</span>
+                        </a>
+                        <a href="#" class="quick-link">
+                            <div class="arrow-icon">→</div>
+                            <span>Electronics</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+        <!-- ===== Terms of Service Content ===== -->
+        <div class="terms-container">
+            <div class="terms-header">
+                <h1>TechHaven Terms of Service</h1>
+            </div>
+
+            <div class="terms-card">
+                <div class="terms-section">
+                    <h2>General Terms</h2>
+                    <ol class="terms-list">
+                        <li>
+                            <span class="term-title">Using Our Website</span>
+                            <p class="term-content">By accessing or using TechHaven's services, you agree to be bound by
+                                these Terms. If you disagree, please refrain from using our services.</p>
+                        </li>
+                        <li>
+                            <span class="term-title">Eligibility</span>
+                            <p class="term-content">You must be at least 18 years old to make purchases. By using our
+                                services, you represent that you meet this requirement.</p>
+                        </li>
+                        <li>
+                            <span class="term-title">Account Responsibility</span>
+                            <p class="term-content">You are responsible for maintaining the confidentiality of your
+                                account credentials and for all activities under your account.</p>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="terms-section">
+                    <h2>Purchases & Payments</h2>
+                    <ol class="terms-list" start="4">
+                        <li>
+                            <span class="term-title">Order Acceptance</span>
+                            <p class="term-content">All orders are subject to product availability. We reserve the right
+                                to refuse or cancel any order for any reason.</p>
+                        </li>
+                        <li>
+                            <span class="term-title">Pricing Information</span>
+                            <p class="term-content">Prices are subject to change without notice. We are not responsible
+                                for typographical errors in pricing.</p>
+                        </li>
+                        <li>
+                            <span class="term-title">Payment Methods</span>
+                            <p class="term-content">We accept major credit cards and PayPal. You authorize us to charge
+                                your selected payment method.</p>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="terms-section">
+                    <h2>Returns & Refunds</h2>
+                    <ol class="terms-list" start="7">
+                        <li>
+                            <span class="term-title">Return Policy</span>
+                            <p class="term-content">Items must be returned within 14 days in original condition. Some
+                                items may be non-returnable.</p>
+                        </li>
+                        <li>
+                            <span class="term-title">Refund Process</span>
+                            <p class="term-content">Refunds are processed within 5-10 business days after we receive
+                                your return.</p>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="terms-section">
+                    <h2>Intellectual Property</h2>
+                    <ol class="terms-list" start="9">
+                        <li>
+                            <span class="term-title">Content Ownership</span>
+                            <p class="term-content">All site content, including logos and product images, is our
+                                property or used with permission.</p>
+                        </li>
+                        <li>
+                            <span class="term-title">Restrictions</span>
+                            <p class="term-content">You may not reproduce, duplicate, or exploit any portion of the site
+                                without express written permission.</p>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="contact-info">
+                    <h2>Contact Us</h2>
+                    <p>For questions about these Terms, please contact:</p>
+                    <p><a href="mailto:support@techhaven.com">support@techhaven.com</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+    <footer>
+        <div class="footer-left">
+            <div><strong>Connect with us</strong></div>
+            <div class="social-icons">
+                <a href="#"><img src="images/fb iconz.png" width="20"></a>
+                <a href="#"><img src="images/instagram icon.png" width="20"></a>
+                <a href="#"><img src="images/gmail icon.png" width="20"></a>
+                <a href="#"><img src="images/x icon.png" width="20"></a>
+            </div>
+            <p><strong>Customer Support</strong></p>
+            <p>Email: support@techhaven.com<br>Phone: +1 (800) 123-4567<br>Hours: Monday–Friday, 9 AM–6 PM</p>
+        </div>
+        <div class="footer-right">
+            <a href="feedback.html">Feedback</a>
+            <a href="faq.html">FAQ's</a>
+            <a href="terms.html">Terms of Service</a>
+            <a href="privacy.html">Privacy Policy</a>
+        </div>
+        <div class="footer-bottom">
+            Copyright © 2025 TECHHAVEN. All rights reserved.
+        </div>
+    </footer>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get all necessary elements
+            const searchIcon = document.getElementById('searchIcon');
+            const searchContainer = document.getElementById('searchContainer');
+            const closeSearch = document.getElementById('closeSearch');
+            const searchInput = document.getElementById('searchInput');
+            const searchQuickLinks = document.getElementById('searchQuickLinks');
+            const statusMessage = document.getElementById('statusMessage');
+
+            // Function to display status message
+            function showStatusMessage(message) {
+                statusMessage.textContent = message;
+                statusMessage.classList.add('active');
+
+                // Hide status message after 3 seconds
+                setTimeout(function () {
+                    statusMessage.classList.remove('active');
+                }, 3000);
+            }
+
+            // Show search container when search icon is clicked
+            searchIcon.addEventListener('click', function (e) {
+                e.preventDefault();
+                searchContainer.style.display = 'flex';
+                setTimeout(() => {
+                    searchContainer.classList.add('active');
+                }, 10);
+                searchQuickLinks.classList.add('active');
+                searchInput.focus();
+                showStatusMessage("Search activated");
+            });
+
+            // Hide search container when close icon is clicked
+            closeSearch.addEventListener('click', function () {
+                searchContainer.classList.remove('active');
+                searchQuickLinks.classList.remove('active');
+                searchInput.value = '';
+                setTimeout(() => {
+                    searchContainer.style.display = 'none';
+                }, 300);
+                showStatusMessage("Search closed");
+            });
+
+            // Handle search submission
+            searchInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (searchInput.value.trim() !== '') {
+                        showStatusMessage(`Searching for: "${searchInput.value}"`);
+                        setTimeout(function () {
+                            searchInput.value = '';
+                            searchContainer.classList.remove('active');
+                            searchQuickLinks.classList.remove('active');
+                            setTimeout(() => {
+                                searchContainer.style.display = 'none';
+                            }, 300);
+                        }, 1000);
+                    }
+                }
+            });
+
+            // Prevent clicks inside search container from closing it
+            searchContainer.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+            searchQuickLinks.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+        });
+
+        // Add this inside your <script> tag, after the DOMContentLoaded event starts
+
+        // Responsive menu functionality
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        // Toggle menu open/close
+        menuToggle.addEventListener('click', function () {
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+        });
+
+        // Hide menu when overlay is clicked (for mobile)
+        menuOverlay.addEventListener('click', function () {
+            menuToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+        });
+
+        // Optional: Hide menu when a nav link is clicked (for single-page feel)
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function () {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            });
+        });
+
+        // Add this at the end of your <script> tag
+        document.addEventListener('DOMContentLoaded', function () {
+            // Hero slider logic
+            const heroSlides = document.querySelectorAll('.hero-slide');
+            const heroPrev = document.getElementById('heroPrev');
+            const heroNext = document.getElementById('heroNext');
+            const heroDotsContainer = document.getElementById('heroSliderDots');
+            let heroCurrent = 0;
+            let heroSliderTimer = null;
+
+            // Set background images from img attribute
+            heroSlides.forEach(slide => {
+                const img = slide.getAttribute('img');
+                if (img) slide.style.backgroundImage = `url('${img}')`;
+            });
+
+            // Create dots
+            heroSlides.forEach((_, idx) => {
+                const dot = document.createElement('span');
+                dot.className = 'hero-slider-dot' + (idx === 0 ? ' active' : '');
+                dot.addEventListener('click', () => {
+                    showHeroSlide(idx);
+                    startHeroSliderTimer();
+                });
+                heroDotsContainer.appendChild(dot);
+            });
+            const heroDots = heroDotsContainer.querySelectorAll('.hero-slider-dot');
+
+            function showHeroSlide(idx) {
+                heroSlides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === idx);
+                    heroDots[i].classList.toggle('active', i === idx);
+                });
+                heroCurrent = idx;
+            }
+
+            function nextHeroSlide() {
+                let next = (heroCurrent + 1) % heroSlides.length;
+                showHeroSlide(next);
+            }
+
+            function prevHeroSlide() {
+                let prev = (heroCurrent - 1 + heroSlides.length) % heroSlides.length;
+                showHeroSlide(prev);
+            }
+
+            function startHeroSliderTimer() {
+                if (heroSliderTimer) clearInterval(heroSliderTimer);
+                heroSliderTimer = setInterval(nextHeroSlide, 5000);
+            }
+
+            heroNext.addEventListener('click', () => {
+                nextHeroSlide();
+                startHeroSliderTimer();
+            });
+            heroPrev.addEventListener('click', () => {
+                prevHeroSlide();
+                startHeroSliderTimer();
+            });
+
+            showHeroSlide(0);
+            startHeroSliderTimer();
+        });
+    </script>
+    </body>
+
+</html>
